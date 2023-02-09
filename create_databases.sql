@@ -173,6 +173,11 @@ CREATE TABLE `Category` (
   `category_discount` DOUBLE DEFAULT 0,
   PRIMARY KEY(categoryID)
 );
+INSERT INTO `Category` VALUES (1,'Fruits and Vegetables',5);
+INSERT INTO `Category` VALUES (2,'Beverages',10);
+INSERT INTO `Category` VALUES (3,'Clothing',15);
+INSERT INTO `Category` VALUES (4,'Footwear',10);
+INSERT INTO `Category` VALUES (5,'Electronics',20);
 
 CREATE TABLE `NGO` (
   `ngoID` INT NOT NULL auto_increment,
@@ -217,6 +222,9 @@ CREATE TABLE `Admin` (
   `username` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL
 );
+INSERT INTO `Admin` VALUES ('Parisha','2021270');
+INSERT INTO `Admin` VALUES ('Medha','2021265');
+
 
 CREATE TABLE `Inventory` (
   `productID` INT NOT NULL,
