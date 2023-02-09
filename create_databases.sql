@@ -445,7 +445,6 @@ CREATE TABLE `Order` (
   `discount` DOUBLE DEFAULT 0,
   `amount_to_ngo` decimal(9,2) NOT NULL,
   `date_order_placed` datetime DEFAULT NULL,
-  `date_expected_arrival` datetime DEFAULT NULL,
   PRIMARY KEY(orderID),
   CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`username`) REFERENCES `Customer` (`username`)  on DELETE CASCADE
 );
