@@ -2,6 +2,19 @@ DROP DATABASE IF EXISTS `online retail store`;
 CREATE DATABASE `online retail store`; 
 USE `online retail store`;
 
+DROP TABLE IF EXISTS Coupon;
+DROP TABLE IF EXISTS Distributor;
+DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS Licence;
+DROP TABLE IF EXISTS Billing;
+DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS NGO;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Inventory;
+DROP TABLE IF EXISTS Admin;
+DROP TABLE IF EXISTS DeliveryPartner;
+DROP TABLE IF EXISTS Customer;
+
 SET NAMES utf8 ;
 SET character_set_client = utf8mb4 ;
 
