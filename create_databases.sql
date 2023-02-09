@@ -553,10 +553,11 @@ CREATE TABLE `Order` (
   /* we will probably have ints to represent diff types of status*/
   `order_amount` decimal(9,2) NOT NULL,
   `productID` INT NOT NULL,
+  `quantity` INT NOT NULL,
   `discount` DOUBLE DEFAULT 0,
   `amount_to_ngo` decimal(9,2) NOT NULL,
   `date_order_placed` datetime DEFAULT NULL,
-  PRIMARY KEY(orderID),
+  PRIMARY KEY(orderID,productID),
   CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`username`) REFERENCES `Customer` (`username`)  on DELETE CASCADE
 );
 
