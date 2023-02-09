@@ -18,7 +18,8 @@ CREATE TABLE `Category` (
   `categoryID` INT NOT NULL auto_increment,
   `category_name` varchar(50) NOT NULL,
   `category_discount` DOUBLE DEFAULT 0,
-  PRIMARY KEY(categoryID)
+  PRIMARY KEY(categoryID),
+  CONSTRAINT `Category_chk_1` CHECK ((0 <= `category_discount` < 100))
 );
 
 INSERT INTO `Category` VALUES (1,'Fruits and Vegetables',5);
@@ -337,7 +338,8 @@ CREATE TABLE `Coupon` (
   `status_of_use` INT DEFAULT 0,
   `categoryID` INT NOT NULL,
   PRIMARY KEY(couponID),
-  CONSTRAINT `Coupon_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `Category` (`categoryID`) on DELETE CASCADE
+  CONSTRAINT `Coupon_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `Category` (`categoryID`) on DELETE CASCADE,
+  CONSTRAINT `Coupon_chk_1` CHECK ((0 <= `amount`))
 );
 
 insert into Coupon (couponID, amount, expiry_date, status_of_use, categoryID) values (1, 51.12, '2023-01-03 11:33:18', 1, 2);
@@ -452,7 +454,10 @@ CREATE TABLE `Product` (
   `rating` INT DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY(productID),
-  CONSTRAINT `Product_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `Category` (`categoryID`)  on DELETE CASCADE
+  CONSTRAINT `Product_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `Category` (`categoryID`)  on DELETE CASCADE,
+  CONSTRAINT `Product_chk_1` CHECK ((0 <= `quantity_in_stock`)),
+  CONSTRAINT `Product_chk_2` CHECK ((0 <= `discount` < 100)),
+  CONSTRAINT `Product_chk_3` CHECK ((1 <= `rating` <= 5))
 );
 
 insert into Product (productID, categoryID, name, quantity_in_stock, discount, storage_type, rating, description) values (1, 1, 'Apple', 61, 16.19, 'in freezer', 4, 'tasty to eat');
@@ -581,7 +586,8 @@ CREATE TABLE `Inventory` (
   `productID` INT NOT NULL,
   `quantity` INT DEFAULT 0,
   `storage_type` varchar(50) NOT NULL,
-  CONSTRAINT `Inventory_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on DELETE CASCADE
+  CONSTRAINT `Inventory_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on DELETE CASCADE,
+  CONSTRAINT `Inventory_chk_1` CHECK ((0 <= `quantity`))
 );
 
 insert into Inventory (productID, quantity, storage_type) values (1, 61, 'in freezer');
