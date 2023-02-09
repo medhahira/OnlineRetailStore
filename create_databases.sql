@@ -441,11 +441,7 @@ CREATE TABLE `Order` (
   `status` INT DEFAULT 0,
   /* we will probably have ints to represent diff types of status*/
   `order_amount` decimal(9,2) NOT NULL,
-  /*
-  **
-  `{order_discription ProductID     Quantity}` <type>,
-  **/
-  
+  `productID` INT NOT NULL,
   `discount` DOUBLE DEFAULT 0,
   `amount_to_ngo` decimal(9,2) NOT NULL,
   `date_order_placed` datetime DEFAULT NULL,
@@ -453,6 +449,107 @@ CREATE TABLE `Order` (
   PRIMARY KEY(orderID),
   CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`username`) REFERENCES `Customer` (`username`)  on DELETE CASCADE
 );
+
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 20, 20.63, 271.83, '2/7/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 30, 50.56, 108.73, '1/30/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 23, 30.39, 353.8, '1/20/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 1, 10, 15.61, 123.85, '1/28/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 1, 33.3, 294.28, '1/4/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 2, 48.67, 77.04, '2/9/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 4, 69.55, 504.82, '1/10/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 1, 6, 37.99, 747.52, '2/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 9, 33.44, 428.82, '1/23/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (1, 'jmcmorran0', 0, 11, 65.77, 717.96, '1/21/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 0, 22, 62.16, 233.65, '1/15/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 0, 34, 71.95, 944.17, '1/24/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 1, 23, 78.26, 822.16, '1/6/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 1, 12, 71.94, 964.26, '1/26/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 1, 1, 3.47, 152.29, '1/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 0, 2, 43.42, 8.03, '1/19/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 1, 4, 51.14, 212.7, '1/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 1, 6, 27.85, 452.97, '1/23/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 0, 9, 19.54, 440.14, '1/31/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (2, 'asibbson1', 0, 11, 36.0, 282.1, '2/9/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 1, 2, 31.64, 66.41, '1/2/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 0, 4, 79.98, 467.87, '1/6/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 0, 25, 67.84, 623.59, '1/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 0, 23, 22.55, 831.66, '1/22/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 1, 16, 3.11, 477.77, '1/19/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 1, 20, 70.13, 156.26, '1/7/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 0, 24, 21.84, 972.21, '1/12/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 1, 6, 32.53, 151.87, '2/4/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 1, 9, 36.92, 609.3, '2/2/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (3, 'fmilne2', 1, 11, 10.02, 128.5, '1/19/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 1, 1, 14.02, 278.9, '1/11/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 0, 12, 26.82, 207.56, '1/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 0, 43, 14.02, 395.35, '2/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 1, 25, 45.22, 257.45, '2/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 0, 23, 26.08, 416.05, '1/24/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 1, 20, 67.33, 16.02, '2/3/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 0, 24, 19.66, 815.81, '2/10/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 0, 6, 68.75, 851.67, '1/2/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 0, 9, 0.99, 299.16, '1/11/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (4, 'kdowall3', 1, 16, 43.17, 12.55, '1/16/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 0, 23, 51.74, 293.26, '1/6/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 0, 1, 70.1, 468.97, '1/7/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 1, 9, 62.82, 203.82, '1/14/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 0, 2, 1.22, 384.82, '1/29/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 0, 1, 54.03, 483.54, '1/15/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 1, 10, 42.49, 79.52, '1/31/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 1, 23, 32.81, 312.76, '2/7/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 1, 14, 48.38, 843.88, '2/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 0, 15, 10.8, 301.44, '1/18/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (5, 'eagus', 1, 6, 17.41, 76.24, '1/3/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 1, 10, 66.99, 588.62, '1/20/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 1, 23, 68.62, 380.42, '1/18/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 0, 14, 51.46, 87.37, '1/6/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 0, 15, 69.29, 587.83, '2/9/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 1, 67, 51.27, 560.99, '1/13/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 0, 23, 51.49, 589.82, '1/9/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 0, 1, 13.8, 896.36, '1/14/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 1, 9, 38.37, 281.75, '2/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 0, 2, 39.17, 610.79, '1/18/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (6, 'kdowall3', 0, 1, 27.73, 311.07, '1/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 1, 23, 55.19, 668.8, '1/30/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 0, 1, 20.79, 711.93, '1/13/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 0, 9, 17.33, 518.75, '1/14/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 1, 2, 52.47, 215.0, '2/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 1, 1, 31.16, 855.28, '2/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 1, 3, 77.65, 178.34, '1/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 1, 23, 46.05, 650.69, '1/18/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 0, 4, 76.99, 281.44, '2/2/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 1, 5, 61.87, 950.15, '1/13/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (7, 'tbinch6', 0, 6, 3.55, 448.18, '1/10/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 3, 50.06, 288.85, '1/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 0, 1, 56.03, 428.18, '1/31/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 9, 65.47, 855.66, '1/11/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 2, 47.57, 344.02, '1/2/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 1, 51.84, 646.35, '1/16/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 3, 45.26, 674.33, '1/15/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 0, 8, 6.74, 954.98, '1/23/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 0, 4, 61.57, 135.95, '1/22/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 5, 5.56, 914.79, '1/24/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (8, 'stsar7', 1, 6, 72.97, 37.32, '1/22/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 23, 68.79, 509.42, '1/14/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 0, 1, 38.29, 295.66, '2/7/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 9, 5.91, 720.68, '1/12/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 2, 55.84, 461.11, '1/11/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 1, 14.75, 47.57, '1/9/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 3, 21.35, 590.84, '1/9/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 23, 13.82, 941.36, '1/30/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 1, 4, 65.0, 433.54, '1/21/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 0, 5, 28.49, 269.22, '1/3/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (9, 'jliddell9', 0, 6, 79.35, 770.63, '2/10/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 0, 3, 77.91, 440.09, '2/7/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 0, 1, 29.09, 689.77, '2/1/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 1, 9, 61.16, 70.07, '1/5/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 1, 2, 21.24, 21.89, '1/21/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 0, 1, 76.7, 702.45, '1/27/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 1, 3, 34.05, 324.24, '1/18/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 0, 8, 17.2, 770.05, '1/22/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 1, 4, 23.05, 154.7, '2/6/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 1, 5, 32.49, 529.63, '2/4/2023');
+insert into Order (orderID, username, status, productID, discount, amount_to_ngo, date_order_placed) values (10, 'abonson5', 0, 6, 50.2, 27.45, '1/18/2023');
 
 
 CREATE TABLE `NGO` (
