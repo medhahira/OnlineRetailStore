@@ -9,7 +9,7 @@ CREATE TABLE `Coupon` (
   `couponID` INT NOT NULL auto_increment,
   `amount` decimal(9,2) NOT NULL,
   `expiry_date` datetime DEFAULT NULL,
-  `staus_of_use` INT DEFAULT 0,
+  `status_of_use` INT DEFAULT 0,
   `categoryID` INT NOT NULL,
   PRIMARY KEY(couponID)
 );
@@ -476,7 +476,7 @@ CREATE TABLE `DeliveryPartner` (
   `pickup_street_name` varchar(100) DEFAULT NULL,
   `pickup_city` varchar(100) NOT NULL,
   `pickup_pincode` char(6) NOT NULL,
-  `expected _arrival_time` datetime DEFAULT NULL,
+  `expected_arrival_time` datetime DEFAULT NULL,
   `delivery_house_number` varchar(10) NOT NULL,
   `delivery_street_name` varchar(100) DEFAULT NULL,
   `delivery_city` varchar(100) NOT NULL,
