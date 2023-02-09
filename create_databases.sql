@@ -705,6 +705,7 @@ CREATE TABLE `Cart` (
   */
   `productID` INT NOT NULL,
   `username` varchar(30) NOT NULL,
+  PRIMARY KEY(productID, username),
   CONSTRAINT `Cart_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on DELETE CASCADE
 );
 
