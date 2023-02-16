@@ -39,8 +39,9 @@ group by orderID,username;
 
 -- 6 Orders that are not delivered
 
-SELECT orderID FROM `online retail store`.order o 
-WHERE o.status != "delivered";
+SELECT orderID, status FROM `online retail store`.order o 
+WHERE o.status != "delivered"
+group by orderID,status;
 
 -- 7 Printing or accessing names of customers who are of a certain city
 
@@ -86,27 +87,27 @@ where p.categoryID = 2;
 
 SELECT c.categoryID, c.category_name, count(*) as NumOfProducts from `online retail store`.product p, `online retail store`.category c
 where p.categoryID = c.categoryID
+group by c.categoryID;
 
 -- 15 show number of products in cart for different customers
 
-SELECT c.username, count(*) as quantity_in_cart FROM customer c
-LEFT JOIN cart
+SELECT c.username, count(*) as quantity_in_cart FROM `online retail store`.customer c
+LEFT JOIN `online retail store`.cart
 ON cart.username = c.username
 where cart.quantity is NOT NULL
 GROUP BY c.username;
-group by c.categoryID;
 
 -- 16 show customers with empty cart
 
-SELECT c.username, 0 as quantity_in_cart FROM customer c
-LEFT JOIN cart
+SELECT c.username, 0 as quantity_in_cart FROM `online retail store`.customer c
+LEFT JOIN `online retail store`.cart
 ON cart.username = c.username
 where cart.quantity is NULL
 GROUP BY c.username;
 
 -- 17 Updating the total funds raised for any ngo
 
-UPDATE ngo n1
+UPDATE `online retail store`.ngo n1
 INNER JOIN(
 SELECT n.ngoID, SUM(b.amount_donated) as funds_donated
 FROM `online retail store`.billing b
@@ -129,7 +130,7 @@ SET n1.funds_raised = B.funds_donated;
 
 -- 18 Updating the total billing amount for an order
 
-UPDATE billing b
+UPDATE `online retail store`.billing b
 INNER JOIN(
 SELECT o.orderID, o.username, round(sum(p.price*o.quantity-o.discount),2) as amountPaid FROM `online retail store`.order o, `online retail store`.product p
 where p.productID = o.productID
