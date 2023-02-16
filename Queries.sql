@@ -102,3 +102,24 @@ LEFT JOIN cart
 ON cart.username = c.username
 where cart.quantity is NULL
 GROUP BY c.username;
+
+-- 17 Updating the total funds raised for any ngo
+
+UPDATE ngo n1
+INNER JOIN(
+SELECT n.ngoID, SUM(b.amount_donated) as funds_donated
+FROM `online retail store`.billing b
+left join `online retail store`.ngo n
+on n.ngoID = b.ngoID
+group by n.ngoID) as B
+on B.ngoID = n1.ngoID
+SET n1.funds_raised = B.funds_donated;
+
+-- 18 Updating the total billing amount for an order
+
+-- UPDATE billing b
+-- INNER JOIN(
+-- SELECT o.orderID, o.username, sum(productID*quantity-discount) as amountPaid FROM `online retail store`.order o
+-- group by orderID,username) as o1
+-- on o1.orderID = b.orderID
+-- SET b.bill_amount = o1.amountPaid;
