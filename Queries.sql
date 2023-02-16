@@ -77,10 +77,28 @@ delete from `online retail store`.coupon c where c.expiry_date < '2023-01-01 00:
 SET foreign_key_checks = 1;
 
 -- 13 show all the products in a given category
+
 SELECT * from `online retail store`.product p
 where p.categoryID = 2;
 
--- 13 show number of products in a different categories
+-- 14 show number of products in a different categories
+
 SELECT c.categoryID, c.category_name, count(*) as NumOfProducts from `online retail store`.product p, `online retail store`.category c
 where p.categoryID = c.categoryID
+
+-- 15 show number of products in cart for different customers
+
+SELECT c.username, count(*) as quantity_in_cart FROM customer c
+LEFT JOIN cart
+ON cart.username = c.username
+where cart.quantity is NOT NULL
+GROUP BY c.username;
 group by c.categoryID;
+
+-- 16 show customers with empty cart
+
+SELECT c.username, 0 as quantity_in_cart FROM customer c
+LEFT JOIN cart
+ON cart.username = c.username
+where cart.quantity is NULL
+GROUP BY c.username;
