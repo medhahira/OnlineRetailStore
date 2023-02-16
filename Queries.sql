@@ -69,3 +69,7 @@ SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE TABLE_NAME='product';
 
+-- shows only valid coupons when datetime is hardcoded
+SET foreign_key_checks = 0;
+delete from `online retail store`.coupon c where c.expiry_date < '2023-01-01 00:00:00';
+SET foreign_key_checks = 1;
