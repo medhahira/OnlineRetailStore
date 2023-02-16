@@ -33,7 +33,8 @@ order by count(*) desc;
 
 -- 5 Get the total order amount
 
-SELECT o.orderID, o.username, sum(productID*quantity-discount) as amountPaid FROM `online retail store`.order o
+SELECT o.orderID, o.username, round(sum(p.price*o.quantity-o.discount),2) as amountPaid FROM `online retail store`.order o, `online retail store`.product p
+where p.productID = o.productID
 group by orderID,username;
 
 -- 6 Orders that are not delivered
@@ -115,11 +116,23 @@ group by n.ngoID) as B
 on B.ngoID = n1.ngoID
 SET n1.funds_raised = B.funds_donated;
 
+-- To check for query 18
+
+-- SET foreign_key_checks = 0;
+-- -- delete from `online retail store`.`order` where orderID>0;
+-- insert into `online retail store`.`order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (11, 'abc', 'out_for_delivery', 110, 1, 10, 30, '2023-01-06 13:26:46');
+-- insert into `online retail store`.`order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (11, 'abc', 'out_for_delivery', 110, 2, 5, 20, '2023-01-06 13:26:46');
+-- insert into `online retail store`.`order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (12, 'xyz', 'out_for_delivery', 110, 2, 5, 20, '2023-01-06 13:26:46');
+-- insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (1001, 'UPI', 36340, 369.34, 7, 2, 11);
+-- insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (1002, 'UPI', 36340, 369.34, 7, 3, 12);
+-- SET foreign_key_checks = 1;
+
 -- 18 Updating the total billing amount for an order
 
--- UPDATE billing b
--- INNER JOIN(
--- SELECT o.orderID, o.username, sum(productID*quantity-discount) as amountPaid FROM `online retail store`.order o
--- group by orderID,username) as o1
--- on o1.orderID = b.orderID
--- SET b.bill_amount = o1.amountPaid;
+UPDATE billing b
+INNER JOIN(
+SELECT o.orderID, o.username, round(sum(p.price*o.quantity-o.discount),2) as amountPaid FROM `online retail store`.order o, `online retail store`.product p
+where p.productID = o.productID
+group by orderID,username) as o1
+on o1.orderID = b.orderID
+SET b.bill_amount = o1.amountPaid;
