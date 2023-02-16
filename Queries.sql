@@ -22,6 +22,7 @@ group by n.ngoID
 order by funds_donated desc;
 
 -- 4 Get the total no. of orders by customers in descending order (RECHECK)
+
 SELECT username, count(*) as totalOrders FROM `online retail store`.order o
 group by o.username
 order by count(*) desc;
