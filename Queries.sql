@@ -21,11 +21,8 @@ on n.ngoID = b.ngoID
 group by n.ngoID
 order by funds_donated desc;
 
--- 4 Get the total no. of orders by customers in descending order (RECHECK)
+-- 4 Get the total no. of products in an order by customers in descending order
 
-SELECT username, count(*) as totalOrders FROM `online retail store`.order o
-group by o.username
-order by count(*) desc;
 SELECT username, orderID, count(*) as totalProductsPerOrder FROM `online retail store`.order o
 group by orderID,username
 order by count(*) desc;
