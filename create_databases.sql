@@ -714,7 +714,8 @@ CREATE TABLE `Order` (
   `discount` DOUBLE DEFAULT 0,
   `date_order_placed` datetime DEFAULT NULL,
   PRIMARY KEY(orderID,productID),
-  CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`username`) REFERENCES `Customer` (`username`)  on UPDATE CASCADE
+  CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`username`) REFERENCES `Customer` (`username`)  on UPDATE CASCADE,
+  CONSTRAINT `Order_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `product` (`productID`)  on UPDATE CASCADE
 );
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (1, 'eagus4', 'out_for_delivery', 39351.2, 13, 90, 30.51, '2023-01-06 13:26:46');
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (1, 'eagus4', 'out_for_delivery', 47586.68, 1, 95, 6.19, '2023-01-01 18:07:07');
@@ -965,14 +966,11 @@ insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID
 
 CREATE TABLE `Cart` (
   `billing_amount` decimal(9,2) NOT NULL,
-  /*again have to look at this
-  `{list_of_items ProductID     Quantity}` <type>,
-  **
-  */
   `productID` INT NOT NULL,
   `quantity` INT NOT NULL,
   `username` varchar(30) NOT NULL,
-  CONSTRAINT `Cart_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on UPDATE CASCADE
+  CONSTRAINT `Cart_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on UPDATE CASCADE,
+  CONSTRAINT `Cart_ibfk_2` FOREIGN KEY (`username`) REFERENCES `customer` (`username`)  on UPDATE CASCADE
 );
 insert into Cart (billing_amount, productID, quantity, username) values (1294.02, 21, 4, 'jliddell9');
 insert into Cart (billing_amount, productID, quantity, username) values (1294.02, 2, 10, 'jliddell9');
@@ -1044,16 +1042,16 @@ insert into Cart (billing_amount, productID, quantity, username) values (2345.67
 insert into Cart (billing_amount, productID, quantity, username) values (2345.67, 80, 8, 'tbinch6');
 insert into Cart (billing_amount, productID, quantity, username) values (2345.67, 90, 1, 'tbinch6');
 insert into Cart (billing_amount, productID, quantity, username) values (2345.67, 91, 1, 'tbinch6');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 11, 10, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 12, 9, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 13, 9, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 14, 4, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 15, 2, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 16, 2, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 17, 3, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 18, 2, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 91, 9, 'stsar');
-insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 20, 1, 'stsar');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 11, 10, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 12, 9, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 13, 9, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 14, 4, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 15, 2, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 16, 2, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 17, 3, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 18, 2, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 91, 9, 'stsar7');
+insert into Cart (billing_amount, productID, quantity, username) values (2134.08, 20, 1, 'stsar7');
 insert into Cart (billing_amount, productID, quantity, username) values (3456.91, 22, 1, 'rbrownlie8');
 insert into Cart (billing_amount, productID, quantity, username) values (3456.91, 23, 9, 'rbrownlie8');
 insert into Cart (billing_amount, productID, quantity, username) values (3456.91, 24, 10, 'rbrownlie8');
