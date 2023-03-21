@@ -10,31 +10,21 @@ const Home = () => {
 				<div class="box-main">
 					<div class="firstHalf">
 						<br></br><br></br><center>
-						<img alt="homepage_img" height="40%" width="60%" src= "https://us.123rf.com/450wm/vectorlab/vectorlab1910/vectorlab191001763/132641324-oculist-doctors-set-professional-optician-exam-devices-for-treatment-vision-eyeglasses-and-chart.jpg?ver=6" />
+						<img alt="homepage_img" height="40%" width="60%" src= "https://miro.medium.com/v2/resize:fit:1018/1*iAu65xDmvpVdBJgps6EDEw.png" />
+						<img alt="homepage_benefit_img" height="40%" width="80%" src= "https://sslimages.shoppersstop.com/sys-master/root/hb5/h60/27269490540574/web_hp_icon-strips_main_20220322.jpg" />
 						</center>
 						<h1 class="text-big"><br></br>
-            What are cataracts?
-						</h1>
+            				Why One Stop Bazaar?
+						</h1><br></br>
 						<p class="text-small">
-            A cataract is a clouding of the normally clear lens of the eye. For people who have cataracts, seeing through cloudy lenses is a bit like looking through a frosty or fogged-up window. Clouded vision caused by cataracts can make it more difficult to read, drive a car (especially at night) or see the expression on a friend's face.
-            </p><br></br>
-            <p class="text-small">
-            Most cataracts develop slowly and don't disturb your eyesight early on. But with time, cataracts will eventually interfere with your vision.
-            </p><br></br>
-            <p class="text-small">
-            At first, stronger lighting and eyeglasses can help you deal with cataracts. But if impaired vision interferes with your usual activities, you might need cataract surgery. Fortunately, cataract surgery is generally a safe, effective procedure.
-						</p><br></br><br></br>
-
-						<h1 class="text-big">
-						What are the types of cataracts?
-						</h1>
-						<p class="text-small">
-						Most cataracts are related to age — they happen because of normal changes in your eyes as you get older. But you can get cataracts for other reasons — like after an eye injury or after surgery for another eye problem (like glaucoma).
+							OneStopBazaar is a one-stop shop for all necessary items that we need for our households. As a child, I remember going to a  hypermarket once every fortnight to help mom and dad stock up on essentials for home. As years have passed, there are not only a physical hypermarket that families visit at home, but also online stores where we have all essentials at our fingertips. This revolution of online grocery and essential shopping peaked during the years 2020-21 because of COVID-19.
 						</p><br></br>
-            <p class="text-small">
-            No matter what type of cataract you have, you’ll need surgery to treat it.
-			</p><br></br>
-
+						<p class="text-small">
+						Now we have adapted to online shopping and find it convenient too.
+						</p><br></br>
+						<p class="text-small">
+						Quick delivery options make shopping easy from the comfort of your home.
+						</p><br></br>
 				</div>
             <br></br>
 			</div>
@@ -42,13 +32,13 @@ const Home = () => {
       <section class="section2">
       <div class="box-main">
         <h1 class="text-mid"><br></br>
-        <button type="button" class="top-center" color='blue'>Check Your Eyes</button><br></br><br></br>
+        <button type="button" class="top-center" color='blue'>Start Shopping</button><br></br><br></br>
         </h1>
       </div>
       </section>
 			<footer className="footer">
 				<p className="text-footer">
-					Made by team Hinata
+					Made by Parisha Agrawal, Medha Hira
 				</p>
 			</footer>
 		</div>

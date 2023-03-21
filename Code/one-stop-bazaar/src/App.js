@@ -4,8 +4,8 @@ import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route}
 	from 'react-router-dom';
 import Home from './pages/home';
-import About from './pages/about';
-import Blogs from './pages/blogs';
+import Categories from './pages/categories';
+import Ratings from './pages/ratings';
 import SignUp from './pages/signup';
 import Contact from './pages/contact';
 
@@ -15,9 +15,9 @@ return (
 	<Navbar />
 	<Routes>
 		<Route path='/' element={<Home />} />
-		<Route path='/about' element={<About/>} />
+		<Route path='/categories' element={<Categories/>} />
 		<Route path='/contact' element={<Contact/>} />
-		<Route path='/blogs' element={<Blogs/>} />
+		<Route path='/ratings' element={<Ratings/>} />
 		<Route path='/sign-up' element={<SignUp/>} />
 	</Routes>
 	</Router>
