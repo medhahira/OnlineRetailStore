@@ -25,7 +25,7 @@ return (
 			Ratings
 		</NavLink>
 		<NavLink to="/sign-up" activeStyle>
-			Sign Up
+			Login / Sign Up
 		</NavLink>
 		<NavLink to="/contact" activeStyle>
 			Contact Us
