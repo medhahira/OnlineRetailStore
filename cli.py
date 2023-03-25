@@ -5,7 +5,7 @@ from datetime import datetime
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='Pam@2302', 
+cnx = mysql.connector.connect(user='root', password='*', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()

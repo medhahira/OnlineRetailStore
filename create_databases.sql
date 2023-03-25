@@ -204,7 +204,7 @@ CREATE TABLE `Customer` (
   PRIMARY KEY(username)
 );
 
-insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values ('jmcmorran0', 'pEisQQ', 'Joshua', 'McMorran', '3755437110', 'jmcmorran0@cnet.com', 'regular', 92312, 85939, 'Butterfield', 'Majennang', 241268);
+insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values ('c1', 'p1', 'Joshua', 'McMorran', '3755437110', 'c1@cnet.com', 'regular', 92312, 85939, 'Butterfield', 'Majennang', 241268);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values ('asibbson1', 'Q4DrVI6gKCn', 'Alejoa', 'Sibbson', '6212742931', 'asibbson1@unc.edu', 'regular', 88565, 69073, 'Hansons', 'Lengkeng', 235715);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values ('fmilne2', 'Go78UIIBz1', 'Flora', 'Milne', '5064450689', 'fmilne2@deviantart.com', 'regular', 82683, 58261, 'Burrows', 'Horta', 683406);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values ('kdowall3', '7wT19Zt28US', 'Kathy', 'Dowall', '8739633885', 'kdowall3@blinklist.com', 'regular', 28449, 90766, 'Arapahoe', 'Niwiska', 776508);
@@ -796,16 +796,16 @@ insert into `Order` (orderID, username, status, order_amount, productID, quantit
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (8, 'asibbson1', 'out_for_delivery', 44702.0, 4, 20, 58.8, '2023-02-06 08:46:42');
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (8, 'asibbson1', 'out_for_delivery', 85470.05, 51, 13, 14.47, '2023-01-24 04:36:06');
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (8, 'asibbson1', 'out_for_delivery', 52582.63, 62, 78, 11.39, '2023-01-27 03:10:00');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 4232.31, 13, 17, 35.69, '2023-01-18 22:21:21');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 32937.12, 1, 55, 72.9, '2023-01-28 08:41:57');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 44389.24, 19, 12, 37.17, '2023-01-27 13:48:57');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 32679.05, 21, 86, 46.12, '2023-01-21 17:33:42');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 66003.3, 10, 53, 53.28, '2023-01-19 17:31:34');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 90318.71, 3, 90, 23.89, '2023-01-16 11:31:49');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 27696.38, 8, 47, 47.68, '2023-01-22 20:44:46');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 47766.01, 4, 6, 54.62, '2023-01-22 05:29:39');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 34251.02, 5, 72, 48.39, '2023-01-21 13:21:25');
-insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'jmcmorran0', 'order_received', 66899.9, 6, 59, 19.67, '2023-01-17 04:42:24');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 4232.31, 13, 17, 35.69, '2023-01-18 22:21:21');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 32937.12, 1, 55, 72.9, '2023-01-28 08:41:57');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 44389.24, 19, 12, 37.17, '2023-01-27 13:48:57');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 32679.05, 21, 86, 46.12, '2023-01-21 17:33:42');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 66003.3, 10, 53, 53.28, '2023-01-19 17:31:34');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 90318.71, 3, 90, 23.89, '2023-01-16 11:31:49');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 27696.38, 8, 47, 47.68, '2023-01-22 20:44:46');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 47766.01, 4, 6, 54.62, '2023-01-22 05:29:39');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 34251.02, 5, 72, 48.39, '2023-01-21 13:21:25');
+insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (9, 'c1', 'order_received', 66899.9, 6, 59, 19.67, '2023-01-17 04:42:24');
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (10, 'abonson5', 'delivered', 58015.18, 3, 17, 0.72, '2023-01-30 03:44:44');
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (10, 'abonson5', 'delivered', 92567.51, 11, 79, 56.13, '2023-01-25 00:01:27');
 insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (10, 'abonson5', 'delivered', 66744.77, 9, 14, 53.41, '2023-01-12 20:43:36');
@@ -827,7 +827,7 @@ CREATE TABLE `NGO` (
   CONSTRAINT `NGO_ibfk_1` FOREIGN KEY (`username`) REFERENCES `Customer` (`username`)  on UPDATE CASCADE
 );
 
-insert into NGO (ngoID, name, registration_number, username, funds_raised) values (1, 'Make a Change', '347581', 'jmcmorran0', '11206.70');
+insert into NGO (ngoID, name, registration_number, username, funds_raised) values (1, 'Make a Change', '347581', 'c1', '11206.70');
 insert into NGO (ngoID, name, registration_number, username, funds_raised) values (2, 'Always Helping', '347582', 'asibbson1', '11045.14');
 insert into NGO (ngoID, name, registration_number, username, funds_raised) values (3, 'Paying it Back', '347583', 'fmilne2', '35143.79');
 insert into NGO (ngoID, name, registration_number, username, funds_raised) values (4, 'The Giving Tree', '347584', 'kdowall3', '11286.06');
@@ -982,16 +982,16 @@ insert into Cart (billing_amount, productID, quantity, username) values (1294.02
 insert into Cart (billing_amount, productID, quantity, username) values (1294.02, 1, 5, 'jliddell9');
 insert into Cart (billing_amount, productID, quantity, username) values (1294.02, 9, 5, 'jliddell9');
 insert into Cart (billing_amount, productID, quantity, username) values (1294.02, 10, 8, 'jliddell9');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 1, 2, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 2, 5, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 3, 4, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 4, 7, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 5, 8, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 6, 7, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 7, 8, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 18, 3, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 90, 8, 'jmcmorran0');
-insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 10, 2, 'jmcmorran0');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 1, 2, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 2, 5, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 3, 4, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 4, 7, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 5, 8, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 6, 7, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 7, 8, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 18, 3, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 90, 8, 'c1');
+insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 10, 2, 'c1');
 insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 12, 3, 'eagus4');
 insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 34, 9, 'eagus4');
 insert into Cart (billing_amount, productID, quantity, username) values (1345.9, 56, 5, 'eagus4');
@@ -1088,7 +1088,7 @@ CREATE TABLE `Distributor` (
   CONSTRAINT `Distributor_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on UPDATE CASCADE
 );
 
-insert into Distributor (distributorID, password, productID, phone_number, email_address, commission, house_number, street_name, city, pincode) values (1, 'azGS2k7Ft2D', 49, '7496233190', 'upidduck0@bigcartel.com', 7128.97, 819, 'Corben', 'Inderka', 279650);
+insert into Distributor (distributorID, password, productID, phone_number, email_address, commission, house_number, street_name, city, pincode) values (1, 'dp1', 49, '7496233190', 'upidduck0@bigcartel.com', 7128.97, 819, 'Corben', 'Inderka', 279650);
 insert into Distributor (distributorID, password, productID, phone_number, email_address, commission, house_number, street_name, city, pincode) values (2, 'DXxAzEvK', 34, '4162143429', 'dmahody1@fotki.com', 1791.17, 563, 'Grover', 'Afareaitu', 315439);
 insert into Distributor (distributorID, password, productID, phone_number, email_address, commission, house_number, street_name, city, pincode) values (3, 'KMrBN9gCgx0', 18, '5019138730', 'hcattellion2@istockphoto.com', 7453.74, 919, 'Vahlen', 'Пласница', 112325);
 insert into Distributor (distributorID, password, productID, phone_number, email_address, commission, house_number, street_name, city, pincode) values (4, '8TGAr1p3N', 97, '4168959286', 'dredholls3@google.cn', 9011.27, 743, 'Golf', 'Jaleswar', 551541);
