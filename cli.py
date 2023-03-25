@@ -9,7 +9,7 @@ print("now =", now)
 # dd/mm/YY H:M:S
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
@@ -37,8 +37,7 @@ while(True):
         print("---------------------------------------------")
         while(True):
             query_auth_admin = """Select username,password from Admin"""
-            print("Enter your username: ")
-            username = input()
+            username = input("Enter your username: ")
             cursor.execute(query_auth_admin)
             valid_user = 0
             for row in cursor.fetchall():
@@ -56,10 +55,18 @@ while(True):
             password = input("Enter your password: ")
             if password in store:
                 print("Authenticated")
-                #to insert a menu option with which we can run this olap query
-                query_report = """SELECT
-    IFNULL(Category.category_name, 'Total') AS Category,
-    IFNULL(Product.storage_type, 'Total') AS Subcategory,
+                print("\n")
+                print(f"Welcome {username}")
+                print("""Please choose a number from the menu to proceed: 
+1. View Quarterly Sales of the each Category
+2. View Curated Sales Data for Each Category 
+3. View Top 5 Customers(based on money spent)""")
+                input_admin = int(input("Enter the number: "))
+                if (input_admin == 1):
+                    #to insert a menu option with which we can run this olap query
+                    #I HAVE MODIFIED THE QUERY A LITTLE, please take a look
+                    query_report = """SELECT
+    Category.category_name AS Category,
     SUM(`Order`.order_amount) AS Total_Sales_Amount,
     SUM(`Order`.quantity) AS Total_Quantity_Sold
 FROM
@@ -70,15 +77,60 @@ FROM
 WHERE
     `Order`.date_order_placed >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
 GROUP BY
-    Category.category_name,
-    Product.storage_type WITH ROLLUP
+    Category.category_name WITH ROLLUP
 HAVING
-    Category IS NOT NULL OR Product.storage_type IS NULL"""
-                cursor.execute(query_report)
-                for row in cursor.fetchall():
-                    print(row)
-                    valid_user = 1
-                break
+    Category IS NOT NULL"""
+                    cursor.execute(query_report)
+                    print("---------------------------------------------")
+                    for row in cursor.fetchall():
+                        print(f"Category: {row[0]}\nSales from the Category (Rs.): {row[1]}\nQuantity sold (units): {row[2]}")
+                        print("---------------------------------------------")
+                    break
+                elif (input_admin == 2):
+                    query_data = """SELECT
+    COALESCE(c.category_name, 'All Categories') AS Category,
+    YEAR(o.date_order_placed) AS Year,
+    MONTH(o.date_order_placed) AS Month,
+    SUM(o.order_amount) AS Sales,
+    COUNT(DISTINCT o.username) AS Customers,
+    COUNT(DISTINCT o.productID) AS Products
+FROM
+    `Order` o
+    JOIN Product p ON o.productID = p.productID
+    JOIN Category c ON p.categoryID = c.categoryID
+GROUP BY Category, Year, Month with ROLLUP
+HAVING
+    Month is NOT NULL
+ORDER BY Category, Year DESC, Month DESC;"""
+                    cursor.execute(query_data)
+                    print("---------------------------------------------")
+                    for row in cursor.fetchall():
+                        print(f"Category: {row[0]}\nYear: {row[1]}\nMonth: {row[2]}\nSales: {row[3]}\nNumber of Distinct Customers: {row[4]}\nNumber of Distint Products from the Category: {row[5]}")
+                        print("---------------------------------------------")
+
+                    break
+                elif (input_admin == 3):
+                    query_top_5_cust = """SELECT 
+                    CASE 
+                    WHEN GROUPING(username) = 1 THEN 'All Customers'
+                    ELSE username
+                    END AS Customer,
+                    SUM(order_amount) AS TotalAmount 
+                    FROM 
+                        `Order`
+                    GROUP BY username with
+                        ROLLUP
+                    HAVING 
+                        username IS NOT NULL 
+                    ORDER BY 
+                        TotalAmount DESC 
+                    LIMIT 
+                        5;
+                    """
+                    cursor.execute(query_top_5_cust)
+                    print("---------------------------------------------")
+                    for row in cursor.fetchall():
+                        print(row)
             else:
                 print("Invalid Password \n")
         break
