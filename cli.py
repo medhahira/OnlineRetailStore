@@ -1,23 +1,16 @@
 import mysql.connector
 from datetime import datetime
 
-# datetime object containing current date and time
-now = datetime.now()
- 
-print("now =", now)
-
-# dd/mm/YY H:M:S
+# YYYY-MM-DD hh:mm:ss
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
+cnx = mysql.connector.connect(user='root', password='*', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
-query = "select `Order`.orderID, `Order`.username,`Order`.productID from `Order` where `Order`.username = 'arn'"
-cursor.execute(query)
-for row in cursor.fetchall():
-    print(row)
+
 while(True):
+    print("\n")
     print("OneStopBazaar")
     print("Welcome to the Online Retail Store")
     print("---------------------------------------------")
@@ -26,7 +19,8 @@ while(True):
     print("""1. Admin LogIn 
 2. User LogIn
 3. User SignUp
-4. Distributor LogIn""")
+4. Distributor LogIn
+5. Exit""")
           
     #SHOULD WE MAKE A DISTRIBUTOR SIGN-UP?
 
@@ -63,7 +57,7 @@ while(True):
 3. View Top 5 Customers(based on money spent)
 4. Data of items in the Inventory for each storage type
 5. Add Category
-6. Delete Category""")
+6. View All Category""")
                 input_admin = int(input("Enter the number: "))
                 if (input_admin == 1):
                     #to insert a menu option with which we can run this olap query
@@ -140,9 +134,25 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     for row in cursor.fetchall():
                         print(row)
                     break
+                elif (input_admin == 5):
+                    input_add_category = input("Enter the name of Category that you want to Add: ")
+                    #PLEASE CHECK IF WE CAN ALSO INSERT ONE PRODUCT WHILE WE MAKE A CATEGORY, I HAVE LEFT THAT OUT RN
+                    #input_prod = input(f"Enter the name of one product to add in {input_add_category}")
+                    category_id = int(input("Enter Category ID: "))
+                    category_disc = float(input("Enter Category Discount: "))
+                    query_category = """INSERT INTO `Category`(categoryID, category_name, category_discount) VALUES (%s,%s,%s);"""
+                    val = (category_id, input_add_category, category_disc)
+                    cursor.execute(query_category, val)
+                    cnx.commit()
+                    break
+                elif (input_admin == 6):
+                    query = "select * from `Category`"
+                    cursor.execute(query)
+                    for row in cursor.fetchall():
+                        print(f"Category ID: {row[0]}, Category Name: {row[1]}, Category Discount: {row[2]}")
+                    break
             else:
                 print("Invalid Password \n")
-        break
 
     #USER LOGIN
     elif (input_landing_page == 2):
@@ -208,10 +218,11 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 elif (input_user == 2):
                     query_view_cart = f"""select Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username from Product, Cart where Product.productID = Cart.productID"""
                     cursor.execute(query_view_cart)
+                    bill = 0
                     for row in cursor.fetchall():
                         if (row[5] == username):
                             print(f"item name: {row[3]}, quantity: {row[0]}")
-                    bill = row[1]
+                            bill = row[1]
                     print(f"billing amount: {bill}")
                     break
                 elif (input_user == 3):
@@ -236,8 +247,6 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     break
             else:
                 print("Invalid Password")
-
-
 
     #USER SIGN UP
     elif (input_landing_page == 3):
@@ -287,8 +296,8 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 break
             else:
                 print("Invalid Password \n")
+    elif(input_landing_page == 5):
         break
-
     else:
         print("Sorry, invalid number")
         print("Please try again\n")
