@@ -3,11 +3,13 @@ from datetime import datetime
 
 # datetime object containing current date and time
 now = datetime.now()
+ 
+print("now =", now)
 
-# YYYY-MM-DD hh:mm:ss
+# dd/mm/YY H:M:S
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
@@ -58,7 +60,10 @@ while(True):
                 print("""Please choose a number from the menu to proceed: 
 1. View Quarterly Sales of the each Category
 2. View Curated Sales Data for Each Category 
-3. View Top 5 Customers(based on money spent)""")
+3. View Top 5 Customers(based on money spent)
+4. Data of items in the Inventory for each storage type
+5. Add Category
+6. Delete Category""")
                 input_admin = int(input("Enter the number: "))
                 if (input_admin == 1):
                     #to insert a menu option with which we can run this olap query
@@ -129,6 +134,12 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     print("---------------------------------------------")
                     for row in cursor.fetchall():
                         print(row)
+                elif (input_admin == 4):    
+                    query_inv = """SELECT storage_type, SUM(quantity) AS amt FROM Inventory Group by storage_type with ROLLUP having storage_type is not null"""
+                    cursor.execute(query_inv)
+                    for row in cursor.fetchall():
+                        print(row)
+                    break
             else:
                 print("Invalid Password \n")
         break
