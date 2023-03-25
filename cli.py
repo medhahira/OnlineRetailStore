@@ -41,7 +41,7 @@ while(True):
             cursor.execute(query_auth_admin)
             valid_user = 0
             for row in cursor.fetchall():
-                if (username) in row[0]:
+                if (username) == row[0]:
                     store = row
                     print(row)
                     valid_user = 1
