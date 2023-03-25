@@ -4,7 +4,7 @@ from datetime import datetime
 # datetime object containing current date and time
 now = datetime.now()
 
-# dd/mm/YY H:M:S
+# YYYY-MM-DD hh:mm:ss
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
 cnx = mysql.connector.connect(user='root', password='*', 
