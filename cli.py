@@ -9,7 +9,7 @@ print("now =", now)
 # dd/mm/YY H:M:S
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
+cnx = mysql.connector.connect(user='root', password='*', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
