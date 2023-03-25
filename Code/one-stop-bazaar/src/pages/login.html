@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Login Form</title>
+
+<link rel="stylesheet" href="style.css"/>
+
+<script src="login_form.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="main">
+<h2>Login As</h2>
+<center><p id = "login_as">Admin</p></center>
+<form id="form_id" method="post" name="myform">
+
+    <!-- <h3>Login As : </h3> -->
+    <select id = "dropdown" onchange = "selectOption()">
+       <option>Admin</option>
+       <option>Customer</option>
+       <option>Distributer</option>
+       <option>NGO</option>
+    </select>
+    <br><br>
+    
+    <script>
+       let login_as = document.getElementById('login_as');
+       function selectOption() {
+          let dropdown = document.getElementById('dropdown');          // get the index of the selected option
+          let selectedIndex = dropdown.selectedIndex;          // get a selected option and text value using the text property
+          let login_type = dropdown.options[selectedIndex].text;
+          login_as.innerHTML = login_type;
+       }
+    </script>
+
+<!-- <div id = "login_type">login_type</div> -->
+<!-- <label>Login as :</label>
+<input type="text" name="username" id="username"/> -->
+<label>User Name :</label>
+<input type="text" name="username" id="username"/>
+<label>Password :</label>
+<input type="password" name="password" id="password"/>
+<input type="button" value="Login" id="submit" onclick="validate()"/>
+</form>
+<!-- <span><b class="note">Note : </b>For this demo use following username and password. <br/><b class="valid">User Name : u1<br/>Password : up1</b></span> -->
+</div>
+</div>
+</body>
+</html>

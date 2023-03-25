@@ -24,8 +24,11 @@ return (
 		<NavLink to="/ratings" activeStyle>
 			Ratings
 		</NavLink>
+		<NavLink to="/login" activeStyle>
+			Login
+		</NavLink>
 		<NavLink to="/sign-up" activeStyle>
-			Login / Sign Up
+			Sign Up
 		</NavLink>
 		<NavLink to="/contact" activeStyle>
 			Contact Us

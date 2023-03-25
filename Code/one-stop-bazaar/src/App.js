@@ -7,6 +7,7 @@ import Home from './pages/home';
 import Categories from './pages/categories';
 import Ratings from './pages/ratings';
 import SignUp from './pages/signup';
+import Login from './pages/login';
 import Contact from './pages/contact';
 import Cart from './pages/cart';
 
@@ -21,6 +22,7 @@ return (
 		<Route path='/ratings' element={<Ratings/>} />
 		<Route path='/sign-up' element={<SignUp/>} />
 		<Route path='/cart' element={<Cart/>} />
+		<Route path='/login' element={<Login/>} />
 	</Routes>
 	</Router>
 );
