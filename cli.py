@@ -2,9 +2,10 @@ import mysql.connector
 from datetime import datetime
 
 # YYYY-MM-DD hh:mm:ss
+now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='Pam@2302', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
@@ -194,7 +195,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                         i+=1
                     inp_category = int(input())
                     query2 = f"""select Product.productID, Product.name, Product.categoryID, Product.price from Category, Product
-                    where Product.categoryID = {inp_category}
+                    where Product.categoryID = {inp_category} group by Product.productID order by Product.productID asc
                     """
                     cursor.execute(query2)
                     for row in cursor.fetchall():
