@@ -33,7 +33,7 @@ return (
 		</NavMenu>
 
     <div class = "rightnav">
-	<button class="cart_btn">Cart</button>
+	<a href= "/cart"><button class="cart_btn">Cart</button></a>
     <input type="text" name="search" id="search" size="10"/>
     <button class="btn">Search</button>
     </div>

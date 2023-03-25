@@ -4,7 +4,7 @@ const Cart = () => {
 return (
 	<div>
 	<h1>
-		List of all Products delatils in cart.
+		List of products with details in cart.
 	</h1>
 	</div>
 );

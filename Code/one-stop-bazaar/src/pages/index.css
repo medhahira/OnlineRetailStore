@@ -120,12 +120,28 @@ cursor: pointer;
     width: 70px;
     color: #000;
     background-color: #8ED9F8;
+	color: #808080;
+
+	cursor: pointer;
 }
 
 .btn-sm {
 	padding: 6px 10px;
 	vertical-align: middle;
 }
+
+a:link, a:visited {
+	background-color: #8ED9F8;
+	color: #808080;
+	padding: 14px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+  }
+  
+  /* a:hover, a:active {
+	background-color: #C3EEFF;
+  } */
 
 .section {
 	height: 70%;
