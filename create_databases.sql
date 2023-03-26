@@ -196,11 +196,12 @@ CREATE TABLE `Customer` (
   `phone_number` char(10) NOT NULL,
   `email_address` varchar(50) NOT NULL,
   `subscription_type` varchar(20) DEFAULT NULL,
-  `couponID` INT NOT NULL,
+  `couponID` INT,
   `house_number` varchar(10) NOT NULL,
   `street_name` varchar(100) DEFAULT NULL,
   `city` varchar(100) NOT NULL,
   `pincode` char(6) NOT NULL,
+  -- CONSTRAINT `Customer_ibfk_1` FOREIGN KEY (`couponID`) REFERENCES `Coupon` (`couponID`) on UPDATE CASCADE,
   PRIMARY KEY(username)
 );
 
@@ -844,8 +845,8 @@ CREATE TABLE `Billing` (
   `payment_mode` VARCHAR(50) NOT NULL,
   `bill_amount` decimal(9,2) NOT NULL,
   `amount_donated` decimal(9,2) NOT NULL,
-  `ngoID` INT NOT NULL ,
-  `couponID` INT NOT NULL,
+  `ngoID` INT ,
+  `couponID` INT,
   `orderID` INT NOT NULL,
   PRIMARY KEY(billingID),
   CONSTRAINT `Billing_ibfk_1` FOREIGN KEY (`ngoID`) REFERENCES `NGO` (`ngoID`)  on UPDATE CASCADE,
