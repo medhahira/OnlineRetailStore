@@ -13,7 +13,7 @@ WHERE
 GROUP BY
     Category.category_name WITH ROLLUP
 HAVING
-    Category IS NOT NULL    
+    Category IS NOT NULL;    
 
 
 --  View Curated Sales Data for Each Category
@@ -57,22 +57,22 @@ LIMIT
 SELECT storage_type, SUM(quantity) AS amt 
 FROM Inventory 
 GROUP BY  storage_type with ROLLUP 
-HAVING storage_type is not null
+HAVING storage_type is not null;
 
 
---GROUP BY CUBE
-SELECT 
-  `Categrory`.categoryID, 
-  Product.productID, 
-  o.username, 
-  SUM(o.order_amount) AS total_order_amount
-FROM `Order` o
-LEFT JOIN Product ON o.productID = Product.productID
-LEFT JOIN `Category` ON Product.categoryID = `Category`.categoryID
-GROUP BY CUBE(`Category`.category_name, Product.productID, o.username)
+-- GROUP BY CUBE
+-- SELECT 
+--   `Categrory`.categoryID, 
+--   Product.productID, 
+--   o.username, 
+--   SUM(o.order_amount) AS total_order_amount
+-- FROM `Order` o
+-- LEFT JOIN Product ON o.productID = Product.productID
+-- LEFT JOIN `Category` ON Product.categoryID = `Category`.categoryID
+-- GROUP BY CUBE(`Category`.category_name, Product.productID, o.username);
 
 
 -- grouping the products by their categoryID, return the sum of their prices for each category
-SELECT categoryID, SUM(price)
-FROM Product
-GROUP BY CUBE(categoryID);
+-- SELECT categoryID, SUM(price)
+-- FROM Product
+-- GROUP BY CUBE(categoryID);
