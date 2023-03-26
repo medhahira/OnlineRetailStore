@@ -21,7 +21,8 @@ while(True):
 2. User LogIn
 3. User SignUp
 4. Distributor LogIn
-5. Exit""")
+5. NGO funds raised
+6. Exit""")
           
     #SHOULD WE MAKE A DISTRIBUTOR SIGN-UP?
 
@@ -157,7 +158,6 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 
             else:
                 print("Invalid Input!")
-
 
 
     #USER LOGIN
@@ -320,6 +320,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
         print ('Successful SignUp')
         print("Redirecting to Home Page")
         #print("\nThe SQL connection is closed.")
+    
     elif (input_landing_page == 4):
         while(True):
             query_auth_dist = """Select distributorID,password from Distributor"""
@@ -344,8 +345,18 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 break
             else:
                 print("Invalid Password \n")
+    
     elif(input_landing_page == 5):
+        ngo_funds = f"""select * from NGO"""
+        cursor.execute(ngo_funds)
+        for row in cursor.fetchall():
+            # print(row)
+            print(f"{row[0]}: {row[1]}, {row[2]}, {row[4]}")
+            # print(f"NGO ID: {row[0]}, NGO Name: {row[1]}, Registration Number: {row[2]}, Funds Raised: {row[4]}")
+    
+    elif(input_landing_page == 6):
         break
+    
     else:
         print("Sorry, invalid number")
         print("Please try again\n")
