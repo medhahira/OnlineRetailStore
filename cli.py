@@ -270,12 +270,12 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     amount_donated = round(float(input("Amount to donate : ")),2)
                 else:
                     ngo_id = None
-                    amount_donated = None
+                    amount_donated = 0
 
                 coupon_use = input("Do you want to use a coupon (y/n)? : ")
                 if coupon_use == 'y':
                     print("Select the Coupon ID from below: \n")
-                    query_coupon = f"""select * from `online retail store`.coupon c where c.expiry_date < dt LIMIT 5;"""
+                    query_coupon = f"""select * from `online retail store`.coupon c LIMIT 5;"""
                     cursor.execute(query_coupon)
                     for row in cursor.fetchall():
                         print(row)
