@@ -240,8 +240,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 print("Items in your cart: ")
                 query_view_cart = f"""select Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username from Product, Cart where Product.productID = Cart.productID"""
                 cursor.execute(query_view_cart)
-                
-                
+
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
@@ -250,6 +249,46 @@ ORDER BY Category, Year DESC, Month DESC;"""
                         val = (12, username, 'order_received', round(float(bill),2), row[2], row[0], 0, dt)
                         cursor.execute(query_insert,val)
                         cnx.commit ()
+
+                bill_amount = bill
+                # bill_amount = 0
+                # for row in cursor.fetchall():
+                #     if (row[5] == username):
+                #         print(f"item name: {row[3]}, quantity: {row[0]}")
+                #         bill_amount = row[1]
+                # print(f"billing amount: {bill_amount}")
+
+                ngo_donate = input("Do you want to donate to an ngo (y/n)? : ")
+                if ngo_donate == 'y':
+                    print("Select the Ngo ID from below: \n")
+                    query_ngo = f"""select NGO.ngoID, NGO.name from NGO"""
+                    cursor.execute(query_ngo)
+                    for row in cursor.fetchall():
+                        print(f"NGO ID: {row[0]}, NGO Name: {row[1]}")
+                    
+                    ngo_id = int(input())
+                    amount_donated = round(float(input("Amount to donate : ")),2)
+                else:
+                    ngo_id = None
+                    amount_donated = None
+
+                coupon_use = input("Do you want to use a coupon (y/n)? : ")
+                if coupon_use == 'y':
+                    print("Select the Coupon ID from below: \n")
+                    query_coupon = f"""select * from `online retail store`.coupon c where c.expiry_date < dt LIMIT 5;"""
+                    cursor.execute(query_coupon)
+                    for row in cursor.fetchall():
+                        print(row)
+                    coupon_id = int(input())
+                else:
+                    coupon_id = None
+
+                method_to_pay = input("Method to pay (COD/UPI/card/wallet) : ")
+
+                query_insert = """insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s, %s)"""
+                val = (111, method_to_pay, round(float(bill_amount),2), amount_donated, ngo_id, coupon_id, 12)
+                cursor.execute(query_insert,val)
+                cnx.commit ()
 
             elif (input_user == 4):
                 break
