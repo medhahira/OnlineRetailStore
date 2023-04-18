@@ -1,38 +1,88 @@
 import mysql.connector
+import time
 from datetime import datetime
+from tabulate import tabulate
+from os import system
 
 # YYYY-MM-DD hh:mm:ss
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
 
+#ADDING IN CART, LETTING USER INC QUANTITY- USE A TRIGGER, OR A CHECK FOR QUANTITY 
+#DELIVERY PARTNER login and signup, details fetch
+#DISTRIBUTOR login and signup 
+print("""
+   _____                        ______     __                          _______                                                   
+ /      \                      /      \   |  \                        |       \                                                  
+|  $$$$$$\ _______    ______  |  $$$$$$\ _| $$_     ______    ______  | $$$$$$$\  ______   ________  ______    ______    ______  
+| $$  | $$|       \  /      \ | $$___\$$|   $$ \   /      \  /      \ | $$__/ $$ |      \ |        \|      \  |      \  /      \ 
+| $$  | $$| $$$$$$$\|  $$$$$$\ \$$    \  \$$$$$$  |  $$$$$$\|  $$$$$$\| $$    $$  \$$$$$$\ \$$$$$$$$ \$$$$$$\  \$$$$$$\|  $$$$$$|
+| $$  | $$| $$  | $$| $$    $$ _\$$$$$$\  | $$ __ | $$  | $$| $$  | $$| $$$$$$$\ /      $$  /    $$ /      $$ /      $$| $$   \$|
+| $$__/ $$| $$  | $$| $$$$$$$$|  \__| $$  | $$|  \| $$__/ $$| $$__/ $$| $$__/ $$|  $$$$$$$ /  $$$$_|  $$$$$$$|  $$$$$$$| $$      
+ \$$    $$| $$  | $$ \$$     \ \$$    $$   \$$  $$ \$$    $$| $$    $$| $$    $$ \$$    $$|  $$    \$$    $$ \$$    $$| $$      
+  \$$$$$$  \$$   \$$  \$$$$$$$  \$$$$$$     \$$$$   \$$$$$$ | $$$$$$$  \$$$$$$$   \$$$$$$$ \$$$$$$$$ \$$$$$$$  \$$$$$$$ \$$      
+                                                            | $$                                                                 
+                                                            | $$                                                                 
+                                                             \$$                                                                 
+""")
 while(True):
     print("\n")
     print("OneStopBazaar")
     print("Welcome to the Online Retail Store")
     print("---------------------------------------------")
     print("Please choose a number from the menu to proceed: ")
+    table_main_menu = [['Number', 'Task'],['1', 'Admin LogIn'],
+             ['2', 'User LogIn'], 
+         ['3', 'User SignUp'], 
+         ['4', 'Distributor LogIn'], 
+         ['5', 'NGO funds raised'],
+        ['6', 'Exit']]
+    print(tabulate(table_main_menu, headers='firstrow', tablefmt = "fancy_grid"))
+
     
-    print("""1. Admin LogIn 
-2. User LogIn
-3. User SignUp
-4. Distributor LogIn
-5. NGO funds raised
-6. Exit""")
-          
     #SHOULD WE MAKE A DISTRIBUTOR SIGN-UP?
+    #NGO login/sign up
 
     input_landing_page = int(input("Enter the number: "))
     #ADMIN LOGIN
+    system('clear')
     if (input_landing_page == 1):
-        print("ADMIN")
+        print("""
+  ______        ___                __         
+ /      \       |  \              |  \          
+|  $$$$$$\  ____| $$ ______ ____   \$$ _______  
+| $$__| $$ /      $$|      \    \ |  \|       \ 
+| $$    $$|  $$$$$$$| $$$$$$\$$$$\| $$| $$$$$$$
+| $$$$$$$$| $$  | $$| $$ | $$ | $$| $$| $$  | $$
+| $$  | $$| $$__| $$| $$ | $$ | $$| $$| $$  | $$
+| $$  | $$ \$$    $$| $$ | $$ | $$| $$| $$  | $$
+ \$$   \$$  \$$$$$$$ \$$  \$$  \$$ \$$ \$$   \$$
+                                                
+        """)
         print("---------------------------------------------")
         count = 0
         valid_admin = 0
+
+        #TRANSACTIONS SYNTAX
+
+        #cnx.start_transaction()
+        #transaction_test_1 = """
+        #UPDATE Product SET price = 50000 WHERE productID = 1
+        #"""
+        #cursor.execute(transaction_test_1)
+        #cnx.commit()
+        #cursor.execute("""
+        #SELECT Product.price, Product.name, Product.productID from Product where Product.productID = 1;
+        #""")
+        #for row in cursor.fetchall():
+        #    print(f"{row[0]} {row[1]} {row[2]}")
+
+        
         while(count<3 and valid_admin == 0):
             query_auth_admin = """Select username,password from Admin"""
             username = input("Enter your username: ")
@@ -50,17 +100,18 @@ while(True):
                 count+=1
                 print(f"{3-count} tries remaining\n")
 
-
+        system('clear')
         while (valid_admin):
             print(f"\nWelcome {username}")
-            print("""Please choose a number from the menu to proceed: 
-1. View Quarterly Sales of the each Category
-2. View Curated Sales Data for Each Category 
-3. View Top 5 Customers(based on money spent)
-4. Data of items in the Inventory for each storage type
-5. Add Category
-6. View All Category
-7. Log out\n""")
+            table_admin_menu = {
+                'Number': ['1','2','3','4','5','6','7'],
+                'Task' : ['View Quarterly Sales of the each Category',
+                          'View Curated Sales Data for Each Category', 
+                          'View Top 5 Customers(based on money spent)',
+                          'Data of items in the Inventory for each storage type',
+                          'Add Category', 'View All Category', 'Log Out']
+            }
+            print(tabulate(table_admin_menu, headers = 'keys',tablefmt = "fancy_grid"))
             input_admin = int(input("Enter the number: "))
             if (input_admin == 1):
                 #to insert a menu option with which we can run this olap query
@@ -85,7 +136,6 @@ Category IS NOT NULL"""
                 for row in cursor.fetchall():
                     print(f"Category: {row[0]}\nSales from the Category (Rs.): {row[1]}\nQuantity sold (units): {row[2]}")
                     print("---------------------------------------------")
-
             elif (input_admin == 2):
                 query_data = """SELECT
 COALESCE(c.category_name, 'All Categories') AS Category,
@@ -142,9 +192,21 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 #input_prod = input(f"Enter the name of one product to add in {input_add_category}")
                 category_id = int(input("Enter Category ID: "))
                 category_disc = float(input("Enter Category Discount: "))
+                prod_add = input("Enter the name of product you want to add while making this category: ")
+                #can we increase the product-ID, USING QUERY
+                prod_id = int(input("Enter Product ID: "))
+                prod_quantity = int(input("Enter quantity in stock: "))
+                prod_price = float(input("Enter price of product: "))
+                prod_disc = float(input("Enter discount on product: "))
+                prod_storage = input("Enter storage type: ")
+                rate = None
+                desc = None
                 query_category = """INSERT INTO `Category`(categoryID, category_name, category_discount) VALUES (%s,%s,%s);"""
+                query_prod = """INSERT INTO `Product`(productID, categoryID, name, quantity_in_stock, price, discount, storage_type, rating, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
                 val = (category_id, input_add_category, category_disc)
+                val1 = (prod_id, category_id, prod_add, prod_quantity, prod_price, prod_disc, prod_storage, rate, desc)
                 cursor.execute(query_category, val)
+                cursor.execute(query_prod, val1)
                 cnx.commit()
 
             elif (input_admin == 6):
@@ -232,7 +294,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill += row[1]
+                        bill = row[1]
                 print(f"billing amount: {bill}")
 
             elif (input_user == 3):
@@ -240,12 +302,11 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 print("Items in your cart: ")
                 query_view_cart = f"""select Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username from Product, Cart where Product.productID = Cart.productID"""
                 cursor.execute(query_view_cart)
-                bill = 0
 
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill += row[1]
+                        bill = row[1]
                         query_insert = """insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (%s, %s, %s, %s, %s, %s, %s, %s)"""
                         val = (12, username, 'order_received', round(float(bill),2), row[2], row[0], 0, dt)
                         cursor.execute(query_insert,val)
@@ -313,7 +374,6 @@ ORDER BY Category, Year DESC, Month DESC;"""
         street = input("Enter street name: ")
         city = input("Enter city: ")
         pin = int(input("Enter 6 digit pin code: "))
-
         query_insert = """insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s)"""
         val = (username, password, f_name, l_name, phone, mail, subs_type, coupon_id, h_no, street, city, pin)
         cursor.execute(query_insert,val)
