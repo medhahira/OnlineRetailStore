@@ -232,7 +232,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill = row[1]
+                        bill += row[1]
                 print(f"billing amount: {bill}")
 
             elif (input_user == 3):
@@ -240,11 +240,12 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 print("Items in your cart: ")
                 query_view_cart = f"""select Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username from Product, Cart where Product.productID = Cart.productID"""
                 cursor.execute(query_view_cart)
+                bill = 0
 
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill = row[1]
+                        bill += row[1]
                         query_insert = """insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (%s, %s, %s, %s, %s, %s, %s, %s)"""
                         val = (12, username, 'order_received', round(float(bill),2), row[2], row[0], 0, dt)
                         cursor.execute(query_insert,val)
