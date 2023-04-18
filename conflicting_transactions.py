@@ -3,6 +3,7 @@ For example, if two different employees update the quantity of the same product
 in the Inventory table simultaneously, the data may become inconsistent. """
 
 def update_product_quantity(conn, product_id, new_quantity):
+#     if error/exception then rollback?
     with conn.cursor() as cur:
         # Start a transaction
         cur.execute("BEGIN;")
