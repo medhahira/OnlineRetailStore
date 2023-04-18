@@ -32,7 +32,9 @@ const Home = () => {
       <section class="section2">
       <div class="box-main">
         <h1 class="text-mid"><br></br>
+		
         <button type="button" class="top-center" color='blue'>Start Shopping</button><br></br><br></br>
+		{/* <a href= "/categories" background-color="F0F6FE"><button type="button" class="top-center" color='blue'>Start Shopping</button></a><br></br><br></br> */}
         </h1>
       </div>
       </section>

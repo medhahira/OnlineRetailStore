@@ -36,7 +36,10 @@ return (
 		</NavMenu>
 
     <div class = "rightnav">
-	<a href= "/cart"><button class="cart_btn">Cart</button></a>
+	<NavLink to="/cart" activeStyle>
+		Cart
+	</NavLink>
+	{/* <a href= "/cart"><button class="cart_btn">Cart</button></a> */}
     <input type="text" name="search" id="search" size="10"/>
     <button class="btn">Search</button>
     </div>
