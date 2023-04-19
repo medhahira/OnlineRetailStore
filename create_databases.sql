@@ -201,7 +201,7 @@ CREATE TABLE `Customer` (
   `street_name` varchar(100) DEFAULT NULL,
   `city` varchar(100) NOT NULL,
   `pincode` char(6) NOT NULL,
-  `balance`decimal(9,2) NOT NULL,
+  `balance` decimal(9,2) NOT NULL,
   -- CONSTRAINT `Customer_ibfk_1` FOREIGN KEY (`couponID`) REFERENCES `Coupon` (`couponID`) on UPDATE CASCADE,
   PRIMARY KEY(username)
 );
@@ -295,7 +295,7 @@ insert into Customer (username, password, first_name, last_name, phone_number, e
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('wbowkett2e', '4h0x5dnMPZh', 'Wenona', 'Bowkett', '5167391394', 'wbowkett2e@de.vu', 'regular', 40466, 3810, 'Division', 'Nanto-shi', 881274, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('eraffles2f', 'NvFf6xmhJ', 'Ellynn', 'Raffles', '5271358358', 'eraffles2f@nymag.com', 'regular', 28255, 56512, 'Sundown', 'Buzdyak', 443856, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('mnast2g', '0bid7YYAs', 'Michele', 'Nast', '3875602796', 'mnast2g@51.la', 'regular', 61622, 60725, 'Michigan', 'Singgit', 113954, 5000);
-insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('mflanagan2h', '5VZC6UcPAYiz', 'Mozes', 'Flanagan', '5546755061', 'mflanagan2h@nature.com', 'regular', 36375, 24773, 'Weeping Birch', 'Chedao', 769217);
+insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('mflanagan2h', '5VZC6UcPAYiz', 'Mozes', 'Flanagan', '5546755061', 'mflanagan2h@nature.com', 'regular', 36375, 24773, 'Weeping Birch', 'Chedao', 769217, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('swhaites2i', 'jeGufdxfJ', 'Stavro', 'Whaites', '2963896825', 'swhaites2i@technorati.com', 'regular', 12413, 79296, 'Kipling', 'Lionel Town', 699902, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('abenallack2j', 'mXh2TfO', 'Alan', 'Benallack', '7342403227', 'abenallack2j@flavors.me', 'regular', 97888, 66011, 'Basil', 'Drammen', 749839, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('acheetham2k', '8xkYu4Jfx6', 'Ansley', 'Cheetham', '5223005664', 'acheetham2k@uol.com.br', 'regular', 83514, 6955, 'Ryan', 'Pak Chong', 947096, 5000);
