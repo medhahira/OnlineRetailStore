@@ -8,7 +8,7 @@ from os import system
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
+cnx = mysql.connector.connect(user='root', password='*', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
@@ -40,7 +40,7 @@ while(True):
              ['2', 'User LogIn'], 
          ['3', 'User SignUp'], 
          ['4', 'Distributor LogIn'], 
-         ['5', 'NGO funds raised'],
+         ['5', 'NGO Data'],
         ['6', 'Exit']]
     print(tabulate(table_main_menu, headers='firstrow', tablefmt = "fancy_grid"))
 
@@ -52,6 +52,7 @@ while(True):
     #ADMIN LOGIN
     system('clear')
     if (input_landing_page == 1):
+        system('clear')
         print("""
   ______        ___                __         
  /      \       |  \              |  \          
@@ -64,7 +65,7 @@ while(True):
  \$$   \$$  \$$$$$$$ \$$  \$$  \$$ \$$ \$$   \$$
                                                 
         """)
-        print("---------------------------------------------")
+        print("\n---------------------------------------------\n")
         count = 0
         valid_admin = 0
 
@@ -104,18 +105,20 @@ while(True):
         while (valid_admin):
             print(f"\nWelcome {username}")
             table_admin_menu = {
-                'Number': ['1','2','3','4','5','6','7'],
+                'Number': ['1','2','3','4','5','6','7','8', '9'],
                 'Task' : ['View Quarterly Sales of the each Category',
                           'View Curated Sales Data for Each Category', 
                           'View Top 5 Customers(based on money spent)',
                           'Data of items in the Inventory for each storage type',
-                          'Add Category', 'View All Category', 'Log Out']
+                          'Add Category', 
+                          'View All Category',  
+                          'View Ratings of Top 10 Delivery Partner and Wages',
+                          'View Incomplete Orders and Status',
+                          'Log Out']
             }
             print(tabulate(table_admin_menu, headers = 'keys',tablefmt = "fancy_grid"))
             input_admin = int(input("Enter the number: "))
             if (input_admin == 1):
-                #to insert a menu option with which we can run this olap query
-                #I HAVE MODIFIED THE QUERY A LITTLE, please take a look
                 query_report = """SELECT
 Category.category_name AS Category,
 SUM(`Order`.order_amount) AS Total_Sales_Amount,
@@ -187,9 +190,8 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     print(row)
 
             elif (input_admin == 5):
+                #creates a new category and mandatorily inserts one product in it, no category is an empty category
                 input_add_category = input("Enter the name of Category that you want to Add: ")
-                #PLEASE CHECK IF WE CAN ALSO INSERT ONE PRODUCT WHILE WE MAKE A CATEGORY, I HAVE LEFT THAT OUT RN
-                #input_prod = input(f"Enter the name of one product to add in {input_add_category}")
                 category_id = int(input("Enter Category ID: "))
                 category_disc = float(input("Enter Category Discount: "))
                 prod_add = input("Enter the name of product you want to add while making this category: ")
@@ -216,14 +218,66 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     print(f"Category ID: {row[0]}, Category Name: {row[1]}, Category Discount: {row[2]}")
 
             elif (input_admin == 7):
-                break
-                
+                query_deliv_rate_wage = """SELECT deliveryID, first_name, last_name, rating, salary 
+                                        FROM DeliveryPartner 
+                                        ORDER BY rating 
+                                        LIMIT 20"""
+                cursor.execute(query_deliv_rate_wage)
+                ids = []
+                names = []
+                ratings = []
+                wages = []
+                for row in cursor.fetchall(): 
+                    ids.append(row[0])
+                    names.append(row[1] + " " + row[2])
+                    ratings.append(row[3])
+                    wages.append(row[4])
+                table_deliv_rate_wage = {"ID" : ids,
+                                    "Name" : names,
+                                     "Rating" : ratings,
+                                     "Wage" : wages}
+                print(tabulate(table_deliv_rate_wage, headers = 'keys', tablefmt='fancy_grid'))
+            
+            elif (input_admin == 8):
+                query_order_stat = """
+                SELECT orderID, username, status, date_order_placed
+                FROM `Order`
+                WHERE status = 'out_for_delivery' or status = 'order_placed'
+                """
+                cursor.execute(query_order_stat)
+                id = []
+                name = []
+                stat = []
+                date = []
+                for row in cursor.fetchall():
+                    id.append(row[0])
+                    name.append(row[1])
+                    stat.append(row[2])
+                    date.append(row[3])
+                table_order_stat = {"ID" : id,
+                                    "UserName" : name,
+                                    "Status" : stat,
+                                    "Date Order Placed" : date}
+                print(tabulate(table_order_stat, headers = 'keys', tablefmt='fancy_grid'))
             else:
                 print("Invalid Input!")
 
 
     #USER LOGIN
     elif (input_landing_page == 2):
+        system('clear')
+        print("""
+ __    __                               
+|  \  |  \                              
+| $$  | $$  _______   ______    ______  
+| $$  | $$ /       \ /      \  /      \ 
+| $$  | $$|  $$$$$$$|  $$$$$$\|  $$$$$$$
+| $$  | $$ \$$    \ | $$    $$| $$   \$$
+| $$__/ $$ _\$$$$$$\| $$$$$$$$| $$      
+ \$$    $$|       $$ \$$     \| $$      
+  \$$$$$$  \$$$$$$$   \$$$$$$$ \$$                                                      
+        """)
+        print("\n---------------------------------------------\n")
         count = 0
         valid_user = 0
         while(count<3 and valid_user == 0):
@@ -242,15 +296,14 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 print("Invalid Username or password\n")
                 count+=1
                 print(f"{3-count} tries remaining\n")
-
+        system('clear')
         while(valid_user):
             print(f"Welcome {username}")
             print("---------------------------------------------")
             print("Please choose a number from the menu to proceed: ")
-            print("""1. View Categories
-2. View Cart
-3. Proceed To Checkout
-4. Exit to Main Menu""")
+            table_user = {'Number' : ['1', '2', '3', '4', '5'],
+              'Task' : ['View Categories', 'View Cart', 'Proceed To CheckOut', 'View Balance Left', 'Exit To Main Menu']}
+            print(tabulate(table_user, headers = 'keys', tablefmt='fancy_grid'))
             input_user = int(input("Enter the number from the menu: "))
             if (input_user == 1):
                 query = "select category_name from Category"
@@ -351,8 +404,12 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 val = (111, method_to_pay, round(float(bill_amount),2), amount_donated, ngo_id, coupon_id, 12)
                 cursor.execute(query_insert,val)
                 cnx.commit ()
-
             elif (input_user == 4):
+                query_bal = f"Select username, balance from Customer where username = '{str(username)}' \n"
+                cursor.execute(query_bal)
+                for row in cursor.fetchall():
+                    print(f"Greetings {row[0]}, the Balance in your Account is: Rs. {row[1]}")
+            elif (input_user == 5):
                 break
 
             else:
@@ -360,6 +417,18 @@ ORDER BY Category, Year DESC, Month DESC;"""
 
     #USER SIGN UP
     elif (input_landing_page == 3):
+        system('clear')
+        print("""    __    __                               
+                    |  \  |  \                              
+                    | $$  | $$  _______   ______    ______  
+                    | $$  | $$ /       \ /      \  /      \ 
+                    | $$  | $$|  $$$$$$$|  $$$$$$\|  $$$$$$$
+                    | $$  | $$ \$$    \ | $$    $$| $$   \$$
+                    | $$__/ $$ _\$$$$$$\| $$$$$$$$| $$      
+                     \$$    $$|       $$ \$$     \| $$      
+                      \$$$$$$  \$$$$$$$   \$$$$$$$ \$$      
+                                                             """)
+        print("\n---------------------------------------------\n")
         print("User SignUp")
         username = input("Set your username: ")
         password = input("Set your password: ")
@@ -379,12 +448,28 @@ ORDER BY Category, Year DESC, Month DESC;"""
         cursor.execute(query_insert,val)
         cnx.commit ()
         print ('Successful SignUp')
+        system('clear')
         print("Redirecting to Home Page")
         #print("\nThe SQL connection is closed.")
     
     elif (input_landing_page == 4):
+        system('clear')
+        print("""
+                _______    __               __              __  __                    __                         
+                |       \ |  \            |  \              |  \|  \                  |  \                        
+                | $$$$$$$\ \$$  _______  _| $$_     ______   \$$| $$____   __    __  _| $$_     ______    ______  
+                | $$  | $$|  \ /       \|   $$ \   /      \ |  \| $$    \ |  \  |  \|   $$ \   /      \  /      \ 
+                | $$  | $$| $$|  $$$$$$$ \$$$$$$  |  $$$$$$\| $$| $$$$$$$\| $$  | $$ \$$$$$$  |  $$$$$$\|  $$$$$$\
+                | $$  | $$| $$ \$$    \   | $$ __ | $$   \$$| $$| $$  | $$| $$  | $$  | $$ __ | $$  | $$| $$   \$$
+                | $$__/ $$| $$ _\$$$$$$\  | $$|  \| $$      | $$| $$__/ $$| $$__/ $$  | $$|  \| $$__/ $$| $$      
+                | $$    $$| $$|       $$   \$$  $$| $$      | $$| $$    $$ \$$    $$   \$$  $$ \$$    $$| $$      
+                 \$$$$$$$  \$$ \$$$$$$$     \$$$$  \$$       \$$ \$$$$$$$   \$$$$$$     \$$$$   \$$$$$$  \$$      
+                                                                                                                  
+                                                                                                                  
+                                                                                                                  """)
+        print("\n---------------------------------------------\n")
         while(True):
-            query_auth_dist = """Select distributorID,password from Distributor"""
+            query_auth_dist = """Select distributorID, password from Distributor"""
             id_dist = int(input("Enter your Distributor ID: "))
             cursor.execute(query_auth_dist)
             valid_user = 0
@@ -403,19 +488,61 @@ ORDER BY Category, Year DESC, Month DESC;"""
             password = input("Enter your password: ")
             if password in store:
                 print("Authenticated")
+
                 break
             else:
                 print("Invalid Password \n")
-    
+        
+        system('clear')
     elif(input_landing_page == 5):
+        system('clear')
+        print("""
+                 __    __   ______    ______  
+                |  \  |  \ /      \  /      \ 
+                | $$\ | $$|  $$$$$$\|  $$$$$$$
+                | $$$\| $$| $$ __\$$| $$  | $$
+                | $$$$\ $$| $$|    \| $$  | $$
+                | $$\$$ $$| $$ \$$$$| $$  | $$
+                | $$ \$$$$| $$__| $$| $$__/ $$
+                | $$  \$$$ \$$    $$ \$$    $$
+                 \$$   \$$  \$$$$$$   \$$$$$$ """)
+        print("\n---------------------------------------------\n")
         ngo_funds = f"""select * from NGO"""
         cursor.execute(ngo_funds)
+        ngo_id = []
+        ngo_name = []
+        reg_num = []
+        funds = []
         for row in cursor.fetchall():
-            # print(row)
-            print(f"{row[0]}: {row[1]}, {row[2]}, {row[4]}")
-            # print(f"NGO ID: {row[0]}, NGO Name: {row[1]}, Registration Number: {row[2]}, Funds Raised: {row[4]}")
-    
+            ngo_id.append(row[0])
+            ngo_name.append(row[1])
+            reg_num.append(row[2])
+            funds.append(row[4])
+        table_ngo = {'NGO ID' : ngo_id,
+                     'Name of NGO' : ngo_name,
+                     'Registeration Number' : reg_num,
+                     'Funds Raised' : funds
+                     }
+        print(tabulate(table_ngo, headers = 'keys', tablefmt='fancy_grid'))
+        
+        go_back = int(input('Press 1 to go back to main screen: '))
+        while (go_back != 1):
+            continue
+        system('clear')
+
     elif(input_landing_page == 6):
+        system('clear')
+        print("""
+         ________  __                            __        __      __                     
+        |        \|  \                          |  \      |  \    /  \                    
+         \$$$$$$$$| $$____    ______   _______  | $$   __  \$$\  /  $$  ______   __    __ 
+           | $$   | $$    \  |      \ |       \ | $$  /  \  \$$\/  $$  /      \ |  \  |  $
+           | $$   | $$$$$$$\  \$$$$$$\| $$$$$$$\| $$_/  $$   \$$  $$  |  $$$$$$\| $$  | $$
+           | $$   | $$  | $$ /      $$| $$  | $$| $$   $$     \$$$$   | $$  | $$| $$  | $$
+           | $$   | $$  | $$|  $$$$$$$| $$  | $$| $$$$$$\     | $$    | $$__/ $$| $$__/ $$
+           | $$   | $$  | $$ \$$    $$| $$  | $$| $$  \$$\    | $$     \$$    $$ \$$    $$
+            \$$    \$$   \$$  \$$$$$$$ \$$   \$$ \$$   \$$     \$$      \$$$$$$   \$$$$$$ """)
+        print("\n\n")
         break
     
     else:
