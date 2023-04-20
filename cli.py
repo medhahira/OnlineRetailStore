@@ -210,16 +210,17 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 FROM
                 Category
                 WHERE 
-                Category.category_name = {str(input_add_category)}
+                Category.category_name = '{input_add_category}';
                 """
-                cursor.execute(query_cat_id)
-                id = 0
-                for row in cursor.fetchall():
-                    id = row[0]
-                query_prod = """INSERT INTO `Product`(categoryID, name, quantity_in_stock, price, discount, storage_type, rating, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
                 val = (input_add_category, category_disc)
-                val1 = (id, prod_add, prod_quantity, prod_price, prod_disc, prod_storage, rate, desc)
                 cursor.execute(query_category, val)
+                cursor.execute(query_cat_id)
+                for row in cursor.fetchall():
+                    id = row[0] - 1
+                query_prod = """INSERT INTO `Product`(categoryID, name, quantity_in_stock, price, discount, storage_type, rating, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+                
+                val1 = (id, prod_add, prod_quantity, prod_price, prod_disc, prod_storage, rate, desc)
+                
                 cursor.execute(query_prod, val1)
                 cnx.commit()
 
