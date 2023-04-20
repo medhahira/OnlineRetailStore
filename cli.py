@@ -8,11 +8,12 @@ from os import system
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
 
+#TRANSACTION 
 def bill_customer(order_id, bill_amount, val):
     try:
         # start a transaction
@@ -252,8 +253,24 @@ ORDER BY Category, Year DESC, Month DESC;"""
             elif (input_admin == 6):
                 query = "select * from `Category`"
                 cursor.execute(query)
+                id = []
+                name = []
+                discount = []
                 for row in cursor.fetchall():
-                    print(f"Category ID: {row[0]}, Category Name: {row[1]}, Category Discount: {row[2]}")
+                    id.append(row[0])
+                    name.append(row[1])
+                    discount.append(row[2])
+                table_cat = {
+                    "Category ID" : id,
+                    "Category Name" : name,
+                    "Category Discount" : discount
+                }
+                update_disc = input("Do you want to update category discount? (y/n): ")
+                if update_prod == 'n':
+                    continue
+                elif update_prod == 'y':
+                    prod_id_update = int(input("Enter the Product ID of the product you want to update: "))
+                    
 
             elif (input_admin == 7):
                 query_deliv_rate_wage = """SELECT deliveryID, first_name, last_name, rating, salary 
@@ -323,23 +340,41 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 elif update_prod == 'y':
                     prod_id_update = int(input("Enter the Product ID of the product you want to update: "))
                     update_q = int(input("Updated Quantity: "))
-                    if update_q == 0:
+                    if update_q != 0:
                         update_prod_quantity = f"""
-                        DELETE FROM
-                        Product 
-                        WHERE
-                        productID = {prod_id_update}
-                        """
+                            UPDATE 
+                            Product
+                            SET 
+                            quantity_in_stock = {update_q}
+                            WHERE 
+                            productID = {prod_id_update}"""
+                        cursor.execute(update_prod_quantity)
+                        cnx.commit()
                     else:
-                        update_prod_quantity = f"""
-                        UPDATE 
-                        Product
-                        SET 
-                        quantity_in_stock = {update_q}
-                        WHERE 
-                        productID = {prod_id_update}"""
-                    cursor.execute(update_prod_quantity)
-                    cnx.commit()
+                        #TRANSACTION 
+                        try:
+                            cnx.autocommit = False
+                            # Delete associated rows from Cart table
+                            delete_from_cart = f"""
+                                DELETE FROM
+                                Cart
+                                WHERE 
+                                productID = {prod_id_update}"""
+                            cursor.execute(delete_from_cart)
+                            # Delete row from Product table
+                            delete_from_product = f"""
+                                DELETE FROM
+                                Product 
+                                WHERE
+                                productID = {prod_id_update}
+                                """
+                            cursor.execute(delete_from_product)
+                            cnx.commit()
+                        except Exception as e:
+                            print(e)
+                            # rollback the transaction if there is an error
+                            cnx.rollback()
+                            print("Error while updating.")
             elif(input_admin == 10):
                 break
             else:
