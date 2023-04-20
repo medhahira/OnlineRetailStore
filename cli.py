@@ -216,7 +216,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 cursor.execute(query_category, val)
                 cursor.execute(query_cat_id)
                 for row in cursor.fetchall():
-                    id = row[0] - 1
+                    id = row[0]
                 query_prod = """INSERT INTO `Product`(categoryID, name, quantity_in_stock, price, discount, storage_type, rating, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
                 
                 val1 = (id, prod_add, prod_quantity, prod_price, prod_disc, prod_storage, rate, desc)
