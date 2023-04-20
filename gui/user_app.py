@@ -3,7 +3,7 @@ from tkinter import messagebox
 import mysql.connector
 
 
-cnx = mysql.connector.connect(user='root', password='Pam@2302', 
+cnx = mysql.connector.connect(user='root', password='*', 
                         host='localhost', database='online retail store')
 c = cnx.cursor()
 
@@ -58,5 +58,8 @@ top5.grid(row=3, column=1, pady=10)
 
 inventory_storage = Button(frame, text="View Balance Left", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=balance_left)
 inventory_storage.grid(row=4, column=1, pady=10)
+
+logout = Button(frame, text="Back", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
+logout.grid(row=5, column=1, pady=10)
 
 ws.mainloop()

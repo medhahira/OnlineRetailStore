@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import mysql.connector
 
-cnx = mysql.connector.connect(user='root', password='Pam@2302', 
+cnx = mysql.connector.connect(user='root', password='*', 
                         host='localhost', database='online retail store')
 c = cnx.cursor()
 
