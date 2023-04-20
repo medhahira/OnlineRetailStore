@@ -8,7 +8,7 @@ from os import system
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
+cnx = mysql.connector.connect(user='root', password='*', 
                               host='localhost', database='online retail store')
 
 cursor = cnx.cursor()
@@ -444,19 +444,36 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     inp_id_choice = input("Enter the id of the product you want to add to cart or type exit: ")
                     if inp_id_choice != 'exit':
                         inp_id = int(inp_id_choice)
-                        query_3 =  f"""select Product.productID, Product.name, Product.price from Product
-                        where Product.productID = {inp_id}
-                        """
-                        cursor.execute(query_3)
-                        
-                        query_cart = """insert into Cart (billing_amount, productID, quantity, username) values (%s, %s, %s, %s)"""
-                        for row in cursor.fetchall():
-                            id = row[0]
-                            quantity = 1
-                            cost = row[2]
-                        val = (cost, id, quantity, username)
-                        cursor.execute(query_cart,val)
-                        cnx.commit ()
+                        #TRANSACTION
+                        try:
+                            check_quantity_query = f"SELECT quantity FROM Inventory WHERE productID = {inp_id}"
+                            cursor.execute(check_quantity_query)
+                            for row in cursor.fetchall():
+                                current_quantity = row[0]
+                                print(current_quantity)
+                            #MODIFY, set quantity added to 1
+                            if (current_quantity >= 1):
+                                update_query = f"UPDATE Inventory SET quantity = {current_quantity - 1} WHERE productID = {inp_id}"
+                                cursor.execute(update_query)
+                                update_prod = f"UPDATE Product SET quantity_in_stock = {current_quantity - 1} WHERE productID = {inp_id}"
+                                cursor.execute(update_prod)
+                                query_3 =  f"""select Product.productID, Product.name, Product.price from Product
+                                where Product.productID = {inp_id}
+                                """
+                                cursor.execute(query_3)
+                                query_cart = """insert into Cart (billing_amount, productID, quantity, username) values (%s, %s, %s, %s)"""
+                                for row in cursor.fetchall():
+                                    id = row[0]
+                                    quantity = 1
+                                    cost = row[2]
+                                val = (cost, id, quantity, username)
+                                cursor.execute(query_cart,val)
+                                cnx.commit ()
+                            else:
+                                print(f"Not enough quantity in stock for product.")
+                        except Exception as e:
+                            print(f"Error: {e}")
+                            cnx.rollback()
 
             elif (input_user == 2):
                 query_view_cart = f"""
