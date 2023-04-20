@@ -40,13 +40,22 @@ c.execute(query_report)
 
 frame = Frame(ws,padx=20,pady=20)
 frame.pack(expand=True)
-r_num = 1
+
+
+Label(frame, text="Category   ", font=("Times", "16", "bold")).grid(row=1,  column=1, pady=10)
+Label(frame, text="Sales from Category   ", font=("Times", "16", "bold")).grid(row=1,  column=2, pady=10)
+Label(frame, text="Quantity sold    ", font=("Times", "16", "bold")).grid(row=1,  column=3, pady=10)
+
+r_num = 2
 for row in c.fetchall():
-        Label(frame, text=f"Category: {row[0]}\nSales from the Category (Rs.): {row[1]}\nQuantity sold (units): {row[2]}", 
-            font=("Times", "16", "")).grid(row=r_num,  columnspan=3, pady=10)
-        r_num += 3
+    Label(frame, text=f"{row[0]}   ", font=("Times", "16", "")).grid(row=r_num,  column=1, pady=10)
+    Label(frame, text=f"{row[1]}   ", font=("Times", "16", "")).grid(row=r_num,  column=2, pady=10)
+    Label(frame, text=f"{row[2]}    ", font=("Times", "16", "")).grid(row=r_num,  column=3, pady=10)
+    # Label(frame, text=f"Category: {row[0]}\nSales from the Category (Rs.): {row[1]}\nQuantity sold (units): {row[2]}", 
+    #     font=("Times", "16", "")).grid(row=r_num,  columnspan=3, pady=10)
+    r_num += 1
 
 logout = Button(frame, text="Back", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
-logout.grid(row=r_num, column=1, pady=10)
+logout.grid(row=r_num, column=3, pady=10)
 
 ws.mainloop()

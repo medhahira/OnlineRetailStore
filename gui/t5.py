@@ -41,13 +41,17 @@ c.execute(query_top_5_cust)
 
 frame = Frame(ws,padx=20,pady=20)
 frame.pack(expand=True)
-r_num = 1
+Label(frame, text="Username   ", font=("Times", "16", "bold")).grid(row=1,  column=1, pady=10)
+Label(frame, text="Purchase   ", font=("Times", "16", "bold")).grid(row=1,  column=2, pady=10)
+r_num = 2
 for row in c.fetchall():
-     Label(frame, text=row, 
-        font=("Times", "16", "")).grid(row=r_num,  columnspan=3, pady=10)
+     Label(frame, text=f"{row[0]}   ", font=("Times", "16", "")).grid(row=r_num,  column=1, pady=10)
+     Label(frame, text=f"{row[1]}   ", font=("Times", "16", "")).grid(row=r_num,  column=2, pady=10)
+    #  Label(frame, text=row, 
+    #     font=("Times", "16", "")).grid(row=r_num,  columnspan=3, pady=10)
      r_num += 1
 
 logout = Button(frame, text="Back", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
-logout.grid(row=r_num, column=1, pady=10)
+logout.grid(row=r_num, column=2, pady=10)
 
 ws.mainloop()
