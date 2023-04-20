@@ -291,7 +291,7 @@ insert into Customer (username, password, first_name, last_name, phone_number, e
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('zkenward2a', 'QvSVRLlFtY', 'Zuzana', 'Kenward', '6656566422', 'zkenward2a@jiathis.com', 'regular', 81084, 77574, 'American', 'Banxi', 303832, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('hcosker2b', '8oTu1eBPk', 'Harlen', 'Cosker', '1812734010', 'hcosker2b@slashdot.org', 'regular', 48100, 93141, 'Eggendart', 'Yangqiaodian', 949127, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('arickword2c', 'vmOu6p', 'Alvie', 'Rickword', '5238544562', 'arickword2c@utexas.edu', 'regular', 46945, 13975, 'Marquette', 'Jiqu', 593452, 5000);
-insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('bbagworth2d', 'WGH8vnvqJMw', 'Bianka', 'Bagworth', '2042516994', 'bbagworth2d@amazon.com', 'regular', 81734, 85546, 'Spaight', 'Beiquan', 386756, 5000);
+insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('bbagworth2d', 'WGH8vnvqJMw', 'Bianka', 'Bagworth', '2042516994', 'bbagworh2d@amazon.com', 'regular', 81734, 85546, 'Spaight', 'Beiquan', 386756, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('wbowkett2e', '4h0x5dnMPZh', 'Wenona', 'Bowkett', '5167391394', 'wbowkett2e@de.vu', 'regular', 40466, 3810, 'Division', 'Nanto-shi', 881274, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('eraffles2f', 'NvFf6xmhJ', 'Ellynn', 'Raffles', '5271358358', 'eraffles2f@nymag.com', 'regular', 28255, 56512, 'Sundown', 'Buzdyak', 443856, 5000);
 insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode,balance) values ('mnast2g', '0bid7YYAs', 'Michele', 'Nast', '3875602796', 'mnast2g@51.la', 'regular', 61622, 60725, 'Michigan', 'Singgit', 113954, 5000);
@@ -1086,7 +1086,7 @@ CREATE TABLE `Distributor` (
   `street_name` varchar(100) DEFAULT NULL,
   `city` varchar(100) NOT NULL,
   `pincode` char(6) NOT NULL,
-  PRIMARY KEY(distributorID),
+  PRIMARY KEY(distributorID, productID),
   CONSTRAINT `Distributor_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`productID`)  on UPDATE CASCADE
 );
 
