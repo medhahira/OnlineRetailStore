@@ -1,11 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import mysql.connector
-from tabulate import tabulate
-from os import system
 
-
-cnx = mysql.connector.connect(user='root', password='Pam@2302', 
+cnx = mysql.connector.connect(user='root', password='*', 
                         host='localhost', database='online retail store')
 c = cnx.cursor()
 
@@ -103,7 +100,7 @@ uname.grid(row=2, column=2)
 pwd.grid(row=3, column=2)
 
 # button 
-reg = Button(frame, text="Create Account", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=createAccount)
+reg = Button(frame, text="Create User Account", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=createAccount)
 reg.grid(row=4, column=1, pady=10)
 
 sub = Button(frame, text="Login", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=submit)

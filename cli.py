@@ -443,8 +443,10 @@ ORDER BY Category, Year DESC, Month DESC;"""
         street = input("Enter street name: ")
         city = input("Enter city: ")
         pin = int(input("Enter 6 digit pin code: "))
-        query_insert = """insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s)"""
-        val = (username, password, f_name, l_name, phone, mail, subs_type, coupon_id, h_no, street, city, pin)
+        balance = 5000
+
+        query_insert = """insert into Customer (username, password, first_name, last_name, phone_number, email_address, subscription_type, couponID, house_number, street_name, city, pincode, balance) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s)"""
+        val = (username, password, f_name, l_name, phone, mail, subs_type, coupon_id, h_no, street, city, pin, balance)
         cursor.execute(query_insert,val)
         cnx.commit ()
         print ('Successful SignUp')
