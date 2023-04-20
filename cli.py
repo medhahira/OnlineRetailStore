@@ -13,6 +13,28 @@ cnx = mysql.connector.connect(user='root', password='*',
 
 cursor = cnx.cursor()
 
+def bill_customer(order_id, bill_amount, val):
+    try:
+        # start a transaction
+        cnx.autocommit = False
+
+        # create a new billing entry for the order
+        query_insert = """insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s, %s)"""
+        cursor.execute(query_insert,val)
+        
+        # add the remaining amount to the customer's account
+        cursor.execute("UPDATE customer SET balance = balance - %s WHERE username = (SELECT distinct username FROM `order` WHERE orderID = %s)", (bill_amount, order_id))
+
+        # commit the transaction
+        cnx.commit()
+    except Exception as e:
+        print(e)
+        # rollback the transaction if there is an error
+        cnx.rollback()
+        print("Error billing customer.")
+    # finally:
+        # cursor.close()
+
 #ADDING IN CART, LETTING USER INC QUANTITY- USE A TRIGGER, OR A CHECK FOR QUANTITY 
 #DELIVERY PARTNER login and signup, details fetch
 #DISTRIBUTOR login and signup 
@@ -426,10 +448,9 @@ ORDER BY Category, Year DESC, Month DESC;"""
 
                 method_to_pay = input("Method to pay (COD/UPI/card/wallet) : ")
                 ##TRANSACTION
-                query_insert = """insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s, %s)"""
                 val = (111, method_to_pay, round(float(bill_amount),2), amount_donated, ngo_id, coupon_id, 12)
-                cursor.execute(query_insert,val)
-                cnx.commit ()
+                bill_customer(12,round(float(bill_amount),2),val)
+
             elif (input_user == 4):
                 query_bal = f"Select username, balance from Customer where username = '{str(username)}' \n"
                 cursor.execute(query_bal)
