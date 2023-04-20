@@ -48,7 +48,7 @@ while(True):
     #SHOULD WE MAKE A DISTRIBUTOR SIGN-UP?
     #NGO login/sign up
 
-    input_landing_page = int(input("Enter the number: "))
+    input_landing_page = int(input("Enter the number from the menu: "))
     #ADMIN LOGIN
     system('clear')
     if (input_landing_page == 1):
@@ -117,7 +117,7 @@ while(True):
                           'Log Out']
             }
             print(tabulate(table_admin_menu, headers = 'keys',tablefmt = "fancy_grid"))
-            input_admin = int(input("Enter the number: "))
+            input_admin = int(input("Enter the number from the menu: "))
             if (input_admin == 1):
                 query_report = """SELECT
 Category.category_name AS Category,
@@ -259,6 +259,8 @@ ORDER BY Category, Year DESC, Month DESC;"""
                                     "Status" : stat,
                                     "Date Order Placed" : date}
                 print(tabulate(table_order_stat, headers = 'keys', tablefmt='fancy_grid'))
+            elif(input_admin == 9):
+                break
             else:
                 print("Invalid Input!")
 
@@ -301,8 +303,8 @@ ORDER BY Category, Year DESC, Month DESC;"""
             print(f"Welcome {username}")
             print("---------------------------------------------")
             print("Please choose a number from the menu to proceed: ")
-            table_user = {'Number' : ['1', '2', '3', '4', '5'],
-              'Task' : ['View Categories', 'View Cart', 'Proceed To CheckOut', 'View Balance Left', 'Exit To Main Menu']}
+            table_user = {'Number' : ['1', '2', '3', '4', '5', '6'],
+              'Task' : ['View Categories', 'View Cart', 'Proceed To CheckOut', 'View Balance Left', 'View Order History', 'Exit To Main Menu']}
             print(tabulate(table_user, headers = 'keys', tablefmt='fancy_grid'))
             input_user = int(input("Enter the number from the menu: "))
             if (input_user == 1):
@@ -410,6 +412,29 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 for row in cursor.fetchall():
                     print(f"Greetings {row[0]}, the Balance in your Account is: Rs. {row[1]}")
             elif (input_user == 5):
+                system('clear')
+                query_hist = f"""
+                SELECT `Order`.username, `Order`.status, `Order`.productID, Product.productID, Product.name , `Order`.orderID
+                FROM `Order`, Product
+                WHERE
+                `Order`.productID = Product.productID
+                AND
+                `Order`.username = '{str(username)}'
+                """
+                cursor.execute(query_hist)
+                stat = []
+                prod = []
+                order_id = []
+                for row in cursor.fetchall():
+                    order_id.append(row[5])
+                    stat.append(row[1])
+                    prod.append(row[4])
+                    #print(f"Username: {row[0]}, Status: {row[1]}, Product Name: {row[4]}")
+                table_order_hist = {"Order ID" : order_id,
+                                    "Status" : stat,
+                                    "Product" : prod}
+                print(tabulate(table_order_hist, headers = 'keys', tablefmt = 'fancy_grid'))
+            elif (input_user == 6):
                 break
 
             else:
@@ -461,7 +486,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 |       \ |  \            |  \              |  \|  \                  |  \                        
                 | $$$$$$$\ \$$  _______  _| $$_     ______   \$$| $$____   __    __  _| $$_     ______    ______  
                 | $$  | $$|  \ /       \|   $$ \   /      \ |  \| $$    \ |  \  |  \|   $$ \   /      \  /      \ 
-                | $$  | $$| $$|  $$$$$$$ \$$$$$$  |  $$$$$$\| $$| $$$$$$$\| $$  | $$ \$$$$$$  |  $$$$$$\|  $$$$$$\
+                | $$  | $$| $$|  $$$$$$$ \$$$$$$  |  $$$$$$\| $$| $$$$$$$\| $$  | $$ \$$$$$$  |  $$$$$$\|  $$$$$$$
                 | $$  | $$| $$ \$$    \   | $$ __ | $$   \$$| $$| $$  | $$| $$  | $$  | $$ __ | $$  | $$| $$   \$$
                 | $$__/ $$| $$ _\$$$$$$\  | $$|  \| $$      | $$| $$__/ $$| $$__/ $$  | $$|  \| $$__/ $$| $$      
                 | $$    $$| $$|       $$   \$$  $$| $$      | $$| $$    $$ \$$    $$   \$$  $$ \$$    $$| $$      
@@ -490,10 +515,97 @@ ORDER BY Category, Year DESC, Month DESC;"""
             password = input("Enter your password: ")
             if password in store:
                 print("Authenticated")
-
+                valid_dist = 1
                 break
             else:
                 print("Invalid Password \n")
+        system('clear')
+        while(valid_dist):
+            print(f"Welcome Distributor ID : {id_dist}")
+            print("---------------------------------------------")
+            print("Please choose a number from the menu to proceed: ")
+            table_distributor = {"Number" : ['1', '2', '3'],
+                                 "Task" : ["View Products you Distribute", 
+                                           "Add a New Product", 
+                                           "Exit to Main Menu"]}
+            print(tabulate(table_distributor, headers = 'keys', tablefmt='fancy_grid'))
+            input_dist = int(input("Enter the number from the menu: "))
+            if (input_dist == 1):
+                system('clear')
+                query_view_dist = f"""
+                SELECT Distributor.distributorID, Distributor.productID, Product.productID, Product.name
+                FROM
+                Distributor, Product
+                WHERE 
+                Distributor.productID = Product.productID
+                AND
+                Distributor.distributorID = {id_dist}
+                """
+                prod_id = []
+                prod_name = []
+                cursor.execute(query_view_dist)
+                for row in cursor.fetchall():
+                    prod_id.append(row[2])
+                    prod_name.append(row[3])
+                table_prod_dist = {"Product ID" : prod_id,
+                                   "Product Name" : prod_name}
+                print(tabulate(table_prod_dist, headers = 'keys', tablefmt = 'fancy_grid'))
+                print('\n')
+            elif (input_dist == 2):
+                system('clear')
+                prod_id_new = int(input("Enter the Product ID of the Product you want to add: "))
+                query_prod_name = f"""
+                SELECT Product.productID, Product.name
+                FROM 
+                Product
+                WHERE
+                Product.productID = {prod_id_new}"""
+                name = ''
+                cursor.execute(query_prod_name)
+                for row in cursor.fetchall():
+                    name = row[1]
+                query_id_exist = f"""
+                SELECT Distributor.distributorID, Distributor.productID
+                FROM
+                Distributor
+                WHERE 
+                Distributor.distributorID = {id_dist}
+                """
+                cursor.execute(query_id_exist)
+                exist = 0
+                for row in cursor.fetchall():
+                    if (row[1] == prod_id_new):
+                        exist = 1
+                        break
+                if (exist):
+                    print("Sorry cannot add this product, you are already a distributor")
+                else:
+                    dist_deets = f"""
+                    SELECT * 
+                    FROM 
+                    Distributor
+                    WHERE 
+                    Distributor.distributorID = {id_dist}"""
+                    cursor.execute(dist_deets)
+                    for row in cursor.fetchall():
+                        one = row[0] 
+                        two = row[1]
+                        three = row[3]
+                        four = row[4]
+                        five = row[5]
+                        six = row[6]
+                        seven = row[7]
+                        eight = row[8]
+                        nine = row[9]
+                    query_add_dist = "insert into Distributor (distributorID, password, productID, phone_number, email_address, commission, house_number, street_name, city, pincode) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                    val = (one,two,prod_id_new,three,four,five,six,seven,eight,nine)
+                    cursor.execute(query_add_dist, val)
+                    cnx.commit()
+                    print(f"\n Successfully Added {name} \n")
+
+            elif (input_dist == 3):
+                system('clear')
+                break
         
         system('clear')
     elif(input_landing_page == 5):
