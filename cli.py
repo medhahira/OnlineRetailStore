@@ -35,6 +35,8 @@ def bill_customer(order_id, bill_amount, val):
     # finally:
         # cursor.close()
 
+
+
 #ADDING IN CART, LETTING USER INC QUANTITY- USE A TRIGGER, OR A CHECK FOR QUANTITY 
 #DELIVERY PARTNER login and signup, details fetch
 #DISTRIBUTOR login and signup 
@@ -127,7 +129,7 @@ while(True):
         while (valid_admin):
             print(f"\nWelcome {username}")
             table_admin_menu = {
-                'Number': ['1','2','3','4','5','6','7','8', '9'],
+                'Number': ['1','2','3','4','5','6','7','8', '9', '10'],
                 'Task' : ['View Quarterly Sales of the each Category',
                           'View Curated Sales Data for Each Category', 
                           'View Top 5 Customers(based on money spent)',
@@ -136,6 +138,7 @@ while(True):
                           'View All Category',  
                           'View Ratings of Top 10 Delivery Partner and Wages',
                           'View Incomplete Orders and Status',
+                          'View Products and Change Quantity in Inventory',
                           'Log Out']
             }
             print(tabulate(table_admin_menu, headers = 'keys',tablefmt = "fancy_grid"))
@@ -295,6 +298,49 @@ ORDER BY Category, Year DESC, Month DESC;"""
                                     "Date Order Placed" : date}
                 print(tabulate(table_order_stat, headers = 'keys', tablefmt='fancy_grid'))
             elif(input_admin == 9):
+                query_prod_admin = """
+                SELECT 
+                Product.name, Product.productID, Product.quantity_in_stock
+                FROM 
+                Product
+                """
+                cursor.execute(query_prod_admin)
+                prod = []
+                prod_id = []
+                quantity = []
+                for row in cursor.fetchall():
+                    prod.append(row[0])
+                    prod_id.append(row[1])
+                    quantity.append(row[2])
+                table_prod_data = {"Product ID" : prod_id,
+                                   "Product Name" : prod,
+                                   "Quantity in Stock" : quantity}
+                print(tabulate(table_prod_data, headers = 'keys', tablefmt = 'fancy_grid'))
+                print("\n")
+                update_prod = input("Do you want to update product quantity in the inventory? (y/n): ")
+                if update_prod == 'n':
+                    continue
+                elif update_prod == 'y':
+                    prod_id_update = int(input("Enter the Product ID of the product you want to update: "))
+                    update_q = int(input("Updated Quantity: "))
+                    if update_q == 0:
+                        update_prod_quantity = f"""
+                        DELETE FROM
+                        Product 
+                        WHERE
+                        productID = {prod_id_update}
+                        """
+                    else:
+                        update_prod_quantity = f"""
+                        UPDATE 
+                        Product
+                        SET 
+                        quantity_in_stock = {update_q}
+                        WHERE 
+                        productID = {prod_id_update}"""
+                    cursor.execute(update_prod_quantity)
+                    cnx.commit()
+            elif(input_admin == 10):
                 break
             else:
                 print("Invalid Input!")
