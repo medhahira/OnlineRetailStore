@@ -10,13 +10,14 @@ c = cnx.cursor()
 ws = Tk()
 ws.title('Python Guides')
 ws.geometry('500x300')
-ws.config(bg="#4D4DFF")
+ws.config(bg="#000000")
 ws.attributes('-fullscreen',True)
 
 def logOut():
    resp = messagebox.askquestion('', 'Are you sure?')
    if resp == 'yes':
         ws.destroy()
+        import admin_app
    else:
         pass
 

@@ -10,7 +10,7 @@ c = cnx.cursor()
 ws = Tk()
 ws.title('Python Guides')
 ws.geometry('500x300')
-ws.config(bg="#4D4DFF")
+ws.config(bg="#000000")
 ws.attributes('-fullscreen',True)
 
 # functions
@@ -21,31 +21,40 @@ def logOut():
    resp = messagebox.askquestion('', 'Are you sure?')
    if resp == 'yes':
         ws.destroy()
+        import login
    else:
         pass
    
 def q_sale():
+    ws.destroy()
     import q_sale
       
 def c_sale():
+    ws.destroy()
     import c_sale
 
 def t5():
+    ws.destroy()
     import t5
 
 def inv_storage():
+    ws.destroy()
     import inv_store
 
 def add_c():
+    ws.destroy()
     import add_categ
 
 def all_c():
+    ws.destroy()
     import all_categ
 
 def t10_rating():
+    ws.destroy()
     import top10_rating
 
 def inc_ord():
+    ws.destroy()
     import incomplete_order
 
 # frames

@@ -9,14 +9,16 @@ c = cnx.cursor()
 ws = Tk()
 ws.title('Python Guides')
 ws.geometry('500x400')
-ws.config(bg="#447c84")
+ws.config(bg="#FFFFFF")
 ws.attributes('-fullscreen',True)
-
 
 def createAccount():
     ws.destroy()
     import register
 
+def ngoDATA():
+    ws.destroy()
+    import ngo_data
 
 def submit():
     t = login_type.get()
@@ -101,12 +103,15 @@ pwd.grid(row=3, column=2)
 
 # button 
 reg = Button(frame, text="Create User Account", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=createAccount)
-reg.grid(row=4, column=1, pady=10)
+reg.grid(row=5, column=1, pady=10)
 
 sub = Button(frame, text="Login", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=submit)
-sub.grid(row=4, column=2, pady=10)
+sub.grid(row=5, column=2, pady=10)
+
+ngo = Button(frame, text="View NGO DATA", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=ngoDATA)
+ngo.grid(row=6, column=1, pady=10)
 
 logout = Button(frame, text="Logout", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
-logout.grid(row=4, column=3, pady=10)
+logout.grid(row=6, column=2, pady=10)
 
 ws.mainloop()
