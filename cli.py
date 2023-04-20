@@ -192,21 +192,33 @@ ORDER BY Category, Year DESC, Month DESC;"""
             elif (input_admin == 5):
                 #creates a new category and mandatorily inserts one product in it, no category is an empty category
                 input_add_category = input("Enter the name of Category that you want to Add: ")
-                category_id = int(input("Enter Category ID: "))
+                #category_id = int(input("Enter Category ID: "))
                 category_disc = float(input("Enter Category Discount: "))
                 prod_add = input("Enter the name of product you want to add while making this category: ")
                 #can we increase the product-ID, USING QUERY
-                prod_id = int(input("Enter Product ID: "))
+                #prod_id = int(input("Enter Product ID: "))
                 prod_quantity = int(input("Enter quantity in stock: "))
                 prod_price = float(input("Enter price of product: "))
                 prod_disc = float(input("Enter discount on product: "))
                 prod_storage = input("Enter storage type: ")
                 rate = None
                 desc = None
-                query_category = """INSERT INTO `Category`(categoryID, category_name, category_discount) VALUES (%s,%s,%s);"""
-                query_prod = """INSERT INTO `Product`(productID, categoryID, name, quantity_in_stock, price, discount, storage_type, rating, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-                val = (category_id, input_add_category, category_disc)
-                val1 = (prod_id, category_id, prod_add, prod_quantity, prod_price, prod_disc, prod_storage, rate, desc)
+                query_category = """INSERT INTO `Category`(category_name, category_discount) VALUES (%s,%s);"""
+
+                query_cat_id = f"""
+                SELECT Category.categoryID, Category.category_name 
+                FROM
+                Category
+                WHERE 
+                Category.category_name = {str(input_add_category)}
+                """
+                cursor.execute(query_cat_id)
+                id = 0
+                for row in cursor.fetchall():
+                    id = row[0]
+                query_prod = """INSERT INTO `Product`(categoryID, name, quantity_in_stock, price, discount, storage_type, rating, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+                val = (input_add_category, category_disc)
+                val1 = (id, prod_add, prod_quantity, prod_price, prod_disc, prod_storage, rate, desc)
                 cursor.execute(query_category, val)
                 cursor.execute(query_prod, val1)
                 cnx.commit()
@@ -343,7 +355,13 @@ ORDER BY Category, Year DESC, Month DESC;"""
                         cnx.commit ()
 
             elif (input_user == 2):
-                query_view_cart = f"""select Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username from Product, Cart where Product.productID = Cart.productID"""
+                query_view_cart = f"""
+                select 
+                Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username 
+                from 
+                Product, Cart 
+                where 
+                Product.productID = Cart.productID"""
                 cursor.execute(query_view_cart)
                 bill = 0
                 for row in cursor.fetchall():
@@ -355,9 +373,14 @@ ORDER BY Category, Year DESC, Month DESC;"""
             elif (input_user == 3):
                 #checkout or placing an order
                 print("Items in your cart: ")
-                query_view_cart = f"""select Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username from Product, Cart where Product.productID = Cart.productID"""
+                query_view_cart = f"""
+                select 
+                Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username 
+                from 
+                Product, Cart 
+                where 
+                Product.productID = Cart.productID"""
                 cursor.execute(query_view_cart)
-
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
@@ -401,7 +424,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     coupon_id = None
 
                 method_to_pay = input("Method to pay (COD/UPI/card/wallet) : ")
-
+                ##TRANSACTION
                 query_insert = """insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s, %s)"""
                 val = (111, method_to_pay, round(float(bill_amount),2), amount_donated, ngo_id, coupon_id, 12)
                 cursor.execute(query_insert,val)
