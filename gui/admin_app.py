@@ -27,35 +27,35 @@ def logOut():
    
 def q_sale():
     ws.destroy()
-    import q_sale
+    import ADMINq_sale
       
 def c_sale():
     ws.destroy()
-    import c_sale
+    import ADMINc_sale
 
 def t5():
     ws.destroy()
-    import t5
+    import ADMINt5
 
 def inv_storage():
     ws.destroy()
-    import inv_store
+    import ADMINinv_store
 
 def add_c():
     ws.destroy()
-    import add_categ
+    import ADMINadd_categ
 
 def all_c():
     ws.destroy()
-    import all_categ
+    import ADMINall_categ
 
 def t10_rating():
     ws.destroy()
-    import top10_rating
+    import ADMINtop10_rating
 
 def inc_ord():
     ws.destroy()
-    import incomplete_order
+    import ADMINincomplete_order
 
 # frames
 frame = Frame(ws,padx=20,pady=20)
