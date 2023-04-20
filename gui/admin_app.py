@@ -33,6 +33,21 @@ def c_sale():
 def t5():
     import t5
 
+def inv_storage():
+    import inv_store
+
+def add_c():
+    import add_categ
+
+def all_c():
+    import all_categ
+
+def t10_rating():
+    import top10_rating
+
+def inc_ord():
+    import incomplete_order
+
 # frames
 frame = Frame(ws,padx=20,pady=20)
 frame.pack(expand=True)
@@ -51,19 +66,19 @@ curated_sale.grid(row=2, column=1, pady=10)
 top5 = Button(frame, text="View Top 5 Customers(based on money spent)", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=t5)
 top5.grid(row=3, column=1, pady=10)
 
-inventory_storage = Button(frame, text="Data of items in the Inventory for each storage type ", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
+inventory_storage = Button(frame, text="Data of items in the Inventory for each storage type ", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=inv_storage)
 inventory_storage.grid(row=4, column=1, pady=10)
 
-add_category = Button(frame, text="Add Category", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
+add_category = Button(frame, text="Add Category", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=add_c)
 add_category.grid(row=5, column=1, pady=10)
 
-all_category = Button(frame, text="View All Category", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
+all_category = Button(frame, text="View All Category", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=all_c)
 all_category.grid(row=6, column=1, pady=10)
 
-view_rating = Button(frame, text="View Ratings of Top 10 Delivery Partner and Wages", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
+view_rating = Button(frame, text="View Ratings of Top 10 Delivery Partner and Wages", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=t10_rating)
 view_rating.grid(row=7, column=1, pady=10)
 
-incomp_ord = Button(frame, text="View Incomplete Orders and Status", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
+incomp_ord = Button(frame, text="View Incomplete Orders and Status", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=inc_ord)
 incomp_ord.grid(row=8, column=1, pady=10)
 
 logout = Button(frame, text="Back", padx=20, pady=10, relief=RAISED, font=("Times", "14", "bold"), command=logOut)
