@@ -566,7 +566,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill = row[1]
+                        bill += row[1]
                 print(f"billing amount: {bill}")
 
             elif (input_user == 3):
