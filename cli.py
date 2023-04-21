@@ -23,7 +23,7 @@ def bill_customer(order_id, bill_amount, val):
         query_insert = """insert into Billing (payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s)"""
         cursor.execute(query_insert,val)
         
-        # remove the billing amount from customer balance
+        # add the remaining amount to the customer's account
         cursor.execute("UPDATE customer SET balance = balance - %s WHERE username = (SELECT distinct username FROM `order` WHERE orderID = %s)", (bill_amount, order_id))
 
         # commit the transaction
@@ -158,8 +158,7 @@ JOIN Billing ON `Order`.orderID = Billing.orderID
 WHERE
 `Order`.date_order_placed >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
 GROUP BY
-Category.category_name WITH ROLLUPMethod to pay (COD/UPI/card/wallet) : card
-1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`online retail store`.`billing`, CONSTRAINT `Billing_ibfk_3` FOREIGN KEY (`orderID`) REFERENCES `order` (`orderID`) ON UPDATE CASCADE
+Category.category_name WITH ROLLUP
 HAVING
 Category IS NOT NULL"""
                 cursor.execute(query_report)
