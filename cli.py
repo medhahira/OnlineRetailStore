@@ -8,7 +8,7 @@ from os import system
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='***', 
                               host='localhost', database='online retail store')
 cursor = cnx.cursor()
 
@@ -146,6 +146,7 @@ while(True):
             print(tabulate(table_admin_menu, headers = 'keys',tablefmt = "fancy_grid"))
             input_admin = int(input("Enter the number from the menu: "))
             if (input_admin == 1):
+                system('clear')
                 query_report = """SELECT
 Category.category_name AS Category,
 SUM(`Order`.order_amount) AS Total_Sales_Amount,
@@ -167,6 +168,7 @@ Category IS NOT NULL"""
                     print(f"Category: {row[0]}\nSales from the Category (Rs.): {row[1]}\nQuantity sold (units): {row[2]}")
                     print("---------------------------------------------")
             elif (input_admin == 2):
+                system('clear')
                 query_data = """SELECT
 COALESCE(c.category_name, 'All Categories') AS Category,
 YEAR(o.date_order_placed) AS Year,
@@ -189,6 +191,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     print("---------------------------------------------")
 
             elif (input_admin == 3):
+                system('clear')
                 query_top_5_cust = """SELECT 
                 CASE 
                 WHEN GROUPING(username) = 1 THEN 'All Customers'
@@ -210,13 +213,15 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 print("---------------------------------------------")
                 for row in cursor.fetchall():
                     print(row)
-            elif (input_admin == 4):    
+            elif (input_admin == 4):   
+                system('clear') 
                 query_inv = """SELECT storage_type, SUM(quantity) AS amt FROM Inventory Group by storage_type with ROLLUP having storage_type is not null"""
                 cursor.execute(query_inv)
                 for row in cursor.fetchall():
                     print(row)
 
             elif (input_admin == 5):
+                system('clear')
                 #creates a new category and mandatorily inserts one product in it, no category is an empty category
                 input_add_category = input("Enter the name of Category that you want to Add: ")
                 #category_id = int(input("Enter Category ID: "))
@@ -252,6 +257,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 cnx.commit()
 
             elif (input_admin == 6):
+                system('clear')
                 query = "select * from `Category`"
                 cursor.execute(query)
                 id = []
@@ -266,15 +272,26 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     "Category Name" : name,
                     "Category Discount" : discount
                 }
-                print(tabulate(table_cat, headers = 'keys', tablefmt='fancy_grid'))
-                update_disc = input("Do you want to update category discount? (y/n): ")
+                print(tabulate(table_cat, headers = 'keys', tablefmt = 'fancy_grid'))
+                update_disc = input("\nDo you want to update category discount? (y/n): ")
                 if update_disc == 'n':
                     continue
                 elif update_disc == 'y':
-                    prod_id_update = int(input("Enter the Product ID of the product you want to update: "))
-                    
+                    cat_id_update = int(input("Enter the Category ID you want to update: "))
+                    new_disc = float(input("Enter new discount: "))
+                    query_update_disc = f"""
+                    UPDATE
+                    Category
+                    SET
+                    category_discount = {new_disc}
+                    WHERE
+                    categoryID = {cat_id_update}
+                    """
+                    cursor.execute(query_update_disc)
+                    cnx.commit()
 
             elif (input_admin == 7):
+                system('clear')
                 query_deliv_rate_wage = """SELECT deliveryID, first_name, last_name, rating, salary 
                                         FROM DeliveryPartner 
                                         ORDER BY rating 
@@ -296,6 +313,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 print(tabulate(table_deliv_rate_wage, headers = 'keys', tablefmt='fancy_grid'))
             
             elif (input_admin == 8):
+                system('clear')
                 query_order_stat = """
                 SELECT orderID, username, status, date_order_placed
                 FROM `Order`
@@ -317,6 +335,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                                     "Date Order Placed" : date}
                 print(tabulate(table_order_stat, headers = 'keys', tablefmt='fancy_grid'))
             elif(input_admin == 9):
+                system('clear')
                 query_prod_admin = """
                 SELECT 
                 Product.name, Product.productID, Product.quantity_in_stock
@@ -378,6 +397,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                             cnx.rollback()
                             print("Error while updating.")
             elif(input_admin == 10):
+                system('clear')
                 query_order_placed = """
                 SELECT orderID, username, status
                 FROM `Order`
@@ -453,6 +473,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     print("Error billing customer.")
 
             elif(input_admin == 11):
+                system('clear')
                 break
             else:
                 print("Invalid Input!")
@@ -501,6 +522,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
             print(tabulate(table_user, headers = 'keys', tablefmt='fancy_grid'))
             input_user = int(input("Enter the number from the menu: "))
             if (input_user == 1):
+                system('clear')
                 query = "select category_name from Category"
                 cursor.execute(query)
                 i = 1
@@ -554,6 +576,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                             cnx.rollback()
 
             elif (input_user == 2):
+                system('clear')
                 query_view_cart = f"""
                 select 
                 Cart.quantity, Cart.billing_amount, Product.productID, Product.name, Cart.productID, Cart.username 
@@ -566,10 +589,11 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 for row in cursor.fetchall():
                     if (row[5] == username):
                         print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill += row[1]
+                        bill = row[1]
                 print(f"billing amount: {bill}")
 
             elif (input_user == 3):
+                system('clear')
                 #checkout or placing an order
                 print("Items in your cart: ")
                 query_view_cart = f"""
@@ -647,6 +671,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 bill_customer(12,round(float(bill_amount),2),val)
 
             elif (input_user == 4):
+                system('clear')
                 query_bal = f"Select username, balance from Customer where username = '{str(username)}' \n"
                 cursor.execute(query_bal)
                 for row in cursor.fetchall():
@@ -675,8 +700,8 @@ ORDER BY Category, Year DESC, Month DESC;"""
                                     "Product" : prod}
                 print(tabulate(table_order_hist, headers = 'keys', tablefmt = 'fancy_grid'))
             elif (input_user == 6):
+                system('clear')
                 break
-
             else:
                 print("Invalid Input!")
 
