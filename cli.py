@@ -23,7 +23,7 @@ def bill_customer(order_id, bill_amount, val):
         query_insert = """insert into Billing (payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s)"""
         cursor.execute(query_insert,val)
         
-        # add the remaining amount to the customer's account
+        # remove the billing amount from customer balance
         cursor.execute("UPDATE customer SET balance = balance - %s WHERE username = (SELECT distinct username FROM `order` WHERE orderID = %s)", (bill_amount, order_id))
 
         # commit the transaction
