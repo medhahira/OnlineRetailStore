@@ -8,7 +8,7 @@ from os import system
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
+cnx = mysql.connector.connect(user='root', password='*', 
                               host='localhost', database='online retail store')
 cursor = cnx.cursor()
 
@@ -266,10 +266,11 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     "Category Name" : name,
                     "Category Discount" : discount
                 }
+                print(tabulate(table_cat, headers = 'keys', tablefmt='fancy_grid'))
                 update_disc = input("Do you want to update category discount? (y/n): ")
-                if update_prod == 'n':
+                if update_disc == 'n':
                     continue
-                elif update_prod == 'y':
+                elif update_disc == 'y':
                     prod_id_update = int(input("Enter the Product ID of the product you want to update: "))
                     
 
