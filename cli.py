@@ -8,10 +8,10 @@ from os import system
 now = datetime.now()
 dt= now.strftime("%Y-%m-%d %H:%M:%S")
 
-cnx = mysql.connector.connect(user='root', password='*', 
+cnx = mysql.connector.connect(user='root', password='Medhahira@16', 
                               host='localhost', database='online retail store')
-
 cursor = cnx.cursor()
+
 
 #TRANSACTION 
 def bill_customer(order_id, bill_amount, val):
@@ -20,7 +20,7 @@ def bill_customer(order_id, bill_amount, val):
         cnx.autocommit = False
 
         # create a new billing entry for the order
-        query_insert = """insert into Billing (billingID, payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s, %s)"""
+        query_insert = """insert into Billing (payment_mode, bill_amount, amount_donated, ngoID, couponID, orderID) values (%s, %s, %s, %s, %s, %s)"""
         cursor.execute(query_insert,val)
         
         # add the remaining amount to the customer's account
@@ -130,7 +130,7 @@ while(True):
         while (valid_admin):
             print(f"\nWelcome {username}")
             table_admin_menu = {
-                'Number': ['1','2','3','4','5','6','7','8', '9', '10'],
+                'Number': ['1','2','3','4','5','6','7','8', '9', '10', '11'],
                 'Task' : ['View Quarterly Sales of the each Category',
                           'View Curated Sales Data for Each Category', 
                           'View Top 5 Customers(based on money spent)',
@@ -140,6 +140,7 @@ while(True):
                           'View Ratings of Top 10 Delivery Partner and Wages',
                           'View Incomplete Orders and Status',
                           'View Products and Change Quantity in Inventory',
+                          'Assign a Delivery Partner to Deliver Order',
                           'Log Out']
             }
             print(tabulate(table_admin_menu, headers = 'keys',tablefmt = "fancy_grid"))
@@ -157,7 +158,8 @@ JOIN Billing ON `Order`.orderID = Billing.orderID
 WHERE
 `Order`.date_order_placed >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
 GROUP BY
-Category.category_name WITH ROLLUP
+Category.category_name WITH ROLLUPMethod to pay (COD/UPI/card/wallet) : card
+1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`online retail store`.`billing`, CONSTRAINT `Billing_ibfk_3` FOREIGN KEY (`orderID`) REFERENCES `order` (`orderID`) ON UPDATE CASCADE
 HAVING
 Category IS NOT NULL"""
                 cursor.execute(query_report)
@@ -376,6 +378,81 @@ ORDER BY Category, Year DESC, Month DESC;"""
                             cnx.rollback()
                             print("Error while updating.")
             elif(input_admin == 10):
+                query_order_placed = """
+                SELECT orderID, username, status
+                FROM `Order`
+                WHERE status = 'order_placed'
+                GROUP BY
+                orderID, username, status
+                """
+                cursor.execute(query_order_placed)
+                id = []
+                name = []
+                stat = []
+                for row in cursor.fetchall():
+                    id.append(row[0])
+                    name.append(row[1])
+                    stat.append(row[2])
+                table_order_stat = {"ID" : id,
+                                    "UserName" : name,
+                                    "Status" : stat
+                                    }
+                print(tabulate(table_order_stat, headers = 'keys', tablefmt='fancy_grid'))
+                print("\n")
+                id_order = int(input("Choose order ID for order you want to assign a delivery partner to: "))
+                #TRANSACTION
+                try:
+                    cnx.autocommit = False
+                    query_free_deliv = f"""
+                        SELECT 
+                        deliveryID, first_name, last_name, `status (Occupied/Free)`, salary
+                        FROM 
+                        DeliveryPartner
+                        WHERE
+                        `status (Occupied/Free)` = 0
+                        """
+                    id = []
+                    name = []
+                    # 0 free, 1 occupied
+                    stat = []
+                    salary = []
+                    cursor.execute(query_free_deliv)
+                    for row in cursor.fetchall():
+                        id.append(row[0])
+                        name.append(row[1] + " " + row[2])
+                        stat.append(row[3])
+                        salary.append(row[4])
+                    table_free_deliv = {"ID" : id,
+                                    "Name" : name,
+                                     "Free or Occupied" : stat,
+                                     "Wage" : salary}
+                    print(tabulate(table_free_deliv, headers = 'keys', tablefmt='fancy_grid'))
+                    inp_deliv_assign = int(input("Enter the delivery ID of partner you want to assign the order to: "))
+                    update_deliv = f"""
+                    UPDATE 
+                    DeliveryPartner 
+                    SET
+                    `status (Occupied/Free)` = {1},
+                    orderID = {id_order}
+                    WHERE
+                    deliveryID = {inp_deliv_assign}
+                    """
+                    cursor.execute(update_deliv)
+                    update_order_stat = f"""
+                    UPDATE
+                    `Order`
+                    SET status = 'out_for_delivery'
+                    WHERE
+                    orderID = {id_order}
+                    """
+                    cursor.execute(update_order_stat)
+                    cnx.commit()
+                except :
+                     # rollback the transaction if there is an error
+                    cnx.rollback()
+                    print("Error billing customer.")
+
+            elif(input_admin == 11):
                 break
             else:
                 print("Invalid Input!")
@@ -446,6 +523,7 @@ ORDER BY Category, Year DESC, Month DESC;"""
                         inp_id = int(inp_id_choice)
                         #TRANSACTION
                         try:
+                            cnx.autocommit = False
                             check_quantity_query = f"SELECT quantity FROM Inventory WHERE productID = {inp_id}"
                             cursor.execute(check_quantity_query)
                             for row in cursor.fetchall():
@@ -501,15 +579,18 @@ ORDER BY Category, Year DESC, Month DESC;"""
                 Product, Cart 
                 where 
                 Product.productID = Cart.productID"""
-                cursor.execute(query_view_cart)
+
+                last_id = """
+                SELECT orderID 
+                FROM `Order`
+                ORDER BY orderID DESC
+                LIMIT 1
+                """
+                id_l = 0
+                cursor.execute(last_id)
                 for row in cursor.fetchall():
-                    if (row[5] == username):
-                        print(f"item name: {row[3]}, quantity: {row[0]}")
-                        bill = row[1]
-                        query_insert = """insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (%s, %s, %s, %s, %s, %s, %s, %s)"""
-                        val = (12, username, 'order_received', round(float(bill),2), row[2], row[0], 0, dt)
-                        cursor.execute(query_insert,val)
-                        cnx.commit ()
+                    id_l = row[0]
+                print(id_l)
 
                 bill_amount = bill
                 # bill_amount = 0
@@ -543,10 +624,26 @@ ORDER BY Category, Year DESC, Month DESC;"""
                     coupon_id = int(input())
                 else:
                     coupon_id = None
-
+                #TRANSACTION: insert into order delete from cart
                 method_to_pay = input("Method to pay (COD/UPI/card/wallet) : ")
+                cursor.execute(query_view_cart)
+                for row in cursor.fetchall():
+                    if (row[5] == username):
+                        print(f"item name: {row[3]}, quantity: {row[0]}")
+                        bill = row[1]
+                        query_insert = """insert into `Order` (orderID, username, status, order_amount, productID, quantity, discount, date_order_placed) values (%s,%s, %s, %s, %s, %s, %s, %s)"""
+                        query_remove_cart = f"""
+                        DELETE FROM 
+                        Cart 
+                        WHERE 
+                        username = '{str(username)}'
+                        """
+                        val = (id_l+1, username, 'order_placed', round(float(bill),2), row[2], row[0], 0, dt)
+                        cursor.execute(query_insert,val)
+                        cursor.execute(query_remove_cart)
+                        cnx.commit ()
                 ##TRANSACTION
-                val = (111, method_to_pay, round(float(bill_amount),2), amount_donated, ngo_id, coupon_id, 12)
+                val = (method_to_pay, round(float(bill_amount),2), amount_donated, ngo_id, coupon_id, id_l)
                 bill_customer(12,round(float(bill_amount),2),val)
 
             elif (input_user == 4):
