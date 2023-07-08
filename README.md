@@ -2,7 +2,7 @@
 
 **Project by: Medha Hira and Parisha Agarwal**
 
-This repository contains the code for an Online Retail Store, which serves as a platform connecting customers, delivery partners, distributors, admins, and an affiliated NGO. The system provides a user-friendly Graphical User Interface (GUI) accessible through login/signup functionality.
+This repository contains the code for an Online Retail Store, which serves as a platform connecting customers, delivery partners, distributors, admins, and an affiliated NGO. The system provides a user-friendly Command Line Interface (CLI) accessible through login/signup functionality.
 
 ## Stakeholders
 
