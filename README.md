@@ -74,7 +74,3 @@ To use the Online Retail Store system:
 2. Set up the necessary dependencies and configurations as specified in the installation guide.
 3. Run the application and access the GUI through the provided URL.
 4. Different stakeholders can log in using their respective credentials and access the appropriate functionality.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
